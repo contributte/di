@@ -24,6 +24,12 @@
 composer require contributte/di
 ```
 
+## Versions
+
+| State       | Version | Branch   | PHP      |
+|-------------|---------|----------|----------|
+| development | `^0.1`  | `master` | `>= 5.6` |
+
 ## Overview
 
 - [AutoloaderExtension - autoload classes by definition](https://github.com/contributte/di/blob/master/.docs/README.md#autoloaderextension)
