@@ -13,17 +13,18 @@
   ],
   "require": {
     "php": ">= 5.6",
-    "nette/di": "^2.4.4",
-    "nette/reflection": "^2.4.0",
+    "nette/di": "^2.4.5",
     "nette/utils": "^2.4.2"
   },
   "require-dev": {
     "ninjify/qa": "^0.3.3",
     "ninjify/nunjuck": "^0.1.4",
-    "nette/robot-loader": "^2.4.1"
+    "nette/robot-loader": "^2.4.2",
+    "nette/reflection": "^2.4.0"
   },
   "suggest": {
-    "nette/robot-loader": "to use ServiceAutoloadExtension[CompilerExtension]"
+    "nette/robot-loader": "to use AutoloadExtension[CompilerExtension]",
+    "nette/reflection": "to use AutoloadExtension[CompilerExtension]"
   },
   "autoload": {
     "psr-4": {
