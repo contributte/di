@@ -30,7 +30,8 @@ composer require contributte/di
 
 ## Overview
 
-- [AutoloaderExtension - autoload classes by definition](https://github.com/contributte/di/blob/master/.docs/README.md#autoloaderextension)
+- [ResourceExtension - autoload classes by definition](https://github.com/contributte/di/blob/master/.docs/README.md#resourceextension)
+- [ContainerAware - inject container](https://github.com/contributte/di/blob/master/.docs/README.md#containeraware)
 
 ## Maintainers
 

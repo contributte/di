@@ -2,64 +2,99 @@
 
 ## Content
 
-- [AutoloaderExtension - autoload classes by definition](#autoloaderextension)
+- [ResourceExtension - autoload classes by definitions](#resourceextension)
+- [ContainerAware - inject container](#containeraware)
 
-## AutoloaderExtension
+## ResourceExtension
 
 At first, you have to register extension.
 
 ```yaml
 extensions:
-    autoloader: Contributte\DI\Autoload\DI\AutoloaderExtension
+    autoload: Contributte\DI\Extension\ResourceExtension
 ```
 
-### Default configuration
-
-This configuration is enabled by default.
+Secondly, define some resources.
 
 ```yaml
-autoloader:
-    dirs:
-        - %appDir%
-
-    annotations:
-        - @Service
-        
-    interfaces:
-        - Contributte\DI\Autoload\AutoloadService
-
-    decorator:
-        inject: off
+autoload:
+    App\Model\Services\:
+      paths: [%appDir%/model/services]
 ```
 
-It means, `autoloader` will be looking for all `*.php` classes in folders (`%appDir%`) which: 
-- implements `Contributte\DI\Autoload\AutoloadService` (OR)
-- has the annotation `@Service` (OR)
+> It maybe looks familiar to you. You're right idea comes from [Symfony 3.3](http://symfony.com/doc/current/service_container/3.3-di-changes.html#the-new-default-services-yml-file).
 
-### Custom configuration
+That's all, `ResourceExtension` will try to register all non-abstract instantiable classes to container.
 
-You can override all configuration settings you want to.
+### Resources
 
 ```yaml
-autoloader:
-    dirs:
-        - %appDir%
-        - %libsDir%
-        - %fooDir%
-
-    annotations:
-        - @Service
-        - @MyCustomService
-        
-    interfaces:
-        - Minetro\Autoloader\AutoloadService
-        - App\Model\MyAutoloadServiceInterface
-
-    decorator:
-        inject: on / off
+autoload:
+    App\Model\Services\:
+      paths: [%appDir%/model/services]
+      excludes: [App\Model\Services\Gopay, App\Model\Services\CustomService\Testing]
+      decorator: 
+        tags: [autoload]
+        setup:
+          - setLogger(@customlogger)
+        autowire: false # true
 ```
 
 ### Performance
 
 Service loading is triggered only once at dependency injection container compile-time. You should be pretty fast, 
 almost as [official registering presenter as services](https://api.nette.org/2.4/source-Bridges.ApplicationDI.ApplicationExtension.php.html#121-160).
+
+## ContainerAware
+
+This package provide missing `IContainerAware` interface for you Applications.
+
+```yaml
+extensions:
+    aware: Contributte\DI\Extension\ContainerAwareExtension
+```
+At this moment you can use `IContainerAware` interface and let container to be injected.
+
+```php
+<?php
+
+namespace App\Model;
+
+use Contributte\DI\IContainerAware;
+use Nette\DI\Container;
+
+final class LoggableCachedEventDispatcher implements IContainerAware
+{
+
+	/** @var Container */
+	protected $container;
+
+	/**
+	 * @param Container $container
+	 * @return void
+	 */
+	public function setContainer(Container $container)
+	{
+		$this->container = $container;
+	}
+
+}
+```
+
+Don't repeat yourself, use `TContainerAware` trait.
+
+```php
+<?php
+
+namespace App\Model;
+
+use Contributte\DI\IContainerAware;
+use Contributte\DI\TContainerAware;
+
+final class LoggableCachedEventDispatcher implements IContainerAware
+{
+
+    use TContainerAware;
+
+}
+```
