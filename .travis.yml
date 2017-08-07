@@ -30,14 +30,14 @@ before_script:
   # Composer
   - travis_retry composer install --no-interaction
   # Coverage
-  - if [[ "$TRAVIS_PHP_VERSION" == "7.1" && "$COMPOSER_FLAG" == "" ]]; then COVERAGE=1; fi
+  - if [[ "$TRAVIS_PHP_VERSION" == "7.1" && "$COMPOSER_FLAG" == "" ]]; then COVERAGE=1 CODESNIFFER=1; fi
 
 script:
-  # Quality Assurance
-  - travis_retry composer qa
-
   # Nette\Tester
   - composer run-script tester
+
+  # Quality Assurance
+  - if [ "$COVERAGE" != "" ]; then travis_retry composer qa; fi
 
   # Nette\Tester + CodeCoverage
   - if [ "$COVERAGE" != "" ]; then composer tester-coverage; fi
