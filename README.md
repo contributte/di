@@ -26,12 +26,13 @@ composer require contributte/di
 
 | State       | Version | Branch   | PHP      |
 |-------------|---------|----------|----------|
-| stable      | `^0.1`  | `master` | `>= 5.6` |
+| stable      | `^0.2`  | `master` | `>= 5.6` |
 
 ## Overview
 
 - [ResourceExtension - autoload classes by definition](https://github.com/contributte/di/blob/master/.docs/README.md#resourceextension)
 - [ContainerAware - inject container](https://github.com/contributte/di/blob/master/.docs/README.md#containeraware)
+- [MutableExtension - testing extension](https://github.com/contributte/di/blob/master/.docs/README.md#mutableetension)
 
 ## Maintainers
 

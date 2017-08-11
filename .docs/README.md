@@ -4,6 +4,7 @@
 
 - [ResourceExtension - autoload classes by definitions](#resourceextension)
 - [ContainerAware - inject container](#containeraware)
+- [MutableExtension - used in tests](#mutableextension)
 
 ## ResourceExtension
 
@@ -97,4 +98,22 @@ final class LoggableCachedEventDispatcher implements IContainerAware
     use TContainerAware;
 
 }
+```
+
+## MutableExtension
+
+This extension is suitable for testing.
+
+```php
+$loader = new ContainerLoader(TEMP_DIR, TRUE);
+$class = $loader->load(function (Compiler $compiler) {
+    $compiler->addExtension('x', $mutable = new MutableExtension());
+    $mutable->onLoad[] = function (CompilerExtension $ext, ContainerBuilder $builder) {
+        $builder->addDefinition($ext->prefix('request'))
+            ->setClass(Request::class)
+            ->setFactory(RequestFactory::class . '::createHttpRequest');
+    };
+    
+    ', 'neon'));
+}, time());
 ```
