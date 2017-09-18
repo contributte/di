@@ -7,9 +7,9 @@ use Nette\DI\CompilerExtension;
 use Nette\DI\Helpers;
 use Nette\DI\Statement;
 use Nette\Loaders\RobotLoader;
-use Nette\Reflection\ClassType;
 use Nette\Utils\Arrays;
 use Nette\Utils\Strings;
+use ReflectionClass;
 use RuntimeException;
 
 /**
@@ -128,7 +128,7 @@ class ResourceExtension extends CompilerExtension
 			if (!class_exists($class, TRUE)) continue;
 
 			// Detect by reflection
-			$ct = new ClassType($class);
+			$ct = new ReflectionClass($class);
 
 			// Skip abstract
 			if ($ct->isAbstract()) continue;
