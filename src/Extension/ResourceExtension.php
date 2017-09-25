@@ -35,6 +35,7 @@ class ResourceExtension extends CompilerExtension
 		'tags' => [],
 		'setup' => [],
 		'autowired' => NULL,
+		'inject' => NULL,
 	];
 
 	/**
@@ -90,6 +91,10 @@ class ResourceExtension extends CompilerExtension
 
 				if ($decorator['autowired'] !== NULL) {
 					$def->setAutowired($decorator['autowired']);
+				}
+
+				if ($decorator['inject'] !== NULL) {
+					$def->setInject($decorator['inject']);
 				}
 			}
 		}
