@@ -33,6 +33,7 @@ composer require contributte/di
 - [ResourceExtension - autoload classes by definition](https://github.com/contributte/di/blob/master/.docs/README.md#resourceextension)
 - [ContainerAware - inject container](https://github.com/contributte/di/blob/master/.docs/README.md#containeraware)
 - [MutableExtension - testing extension](https://github.com/contributte/di/blob/master/.docs/README.md#mutableetension)
+- [InjectValueExtension - inject parameters](https://github.com/contributte/di/blob/master/.docs/README.md#injectvalueextension)
 
 ## Maintainers
 

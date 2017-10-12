@@ -5,6 +5,7 @@
 - [ResourceExtension - autoload classes by definitions](#resourceextension)
 - [ContainerAware - inject container](#containeraware)
 - [MutableExtension - used in tests](#mutableextension)
+- [InjectValueExtension - inject parameters](#injectvalueextension)
 
 ## ResourceExtension
 
@@ -116,4 +117,43 @@ $class = $loader->load(function (Compiler $compiler) {
     
     ', 'neon'));
 }, time());
+```
+
+## InjectValueExtension
+
+This **awesome** extension allowed to you inject values directly into public properties.
+
+Let's say, we have service like this:
+
+```php
+class FooBarService
+{
+
+	/** @var string @value(%appDir%/baz) */
+	public $baz;
+
+}
+```
+
+At first register `InjectValueExtension` under `extensions` key.
+
+```yaml
+extensions:
+    injectvalue: Contributte\DI\Extension\InjectValueExtension
+    
+injectvalue:
+    all: on/off
+```
+
+By default, extension `inject values` only for services having `inject.value` tag.
+You can override it to inject to all services by define `all: on`. Or follow the prefer way 
+and use Nette\DI decorator.
+
+```yaml
+decorator:
+    App\MyBaseService:
+      tags: [inject.value]
+
+    App\MyBasePresenter:
+      tags: [inject.value]
 ```
