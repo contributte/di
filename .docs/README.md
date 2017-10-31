@@ -161,7 +161,7 @@ decorator:
 
 ## PassCompilerExtension
 
-With this extension you can split your big extension/configurtion into more compiler passes (symfony idea).
+With this extension you can split your big extension/configuration into more compiler passes (symfony idea).
 
 ```php
 use Contributte\DI\Extension\PassCompilerExtension;
@@ -171,8 +171,8 @@ final class FoobarExtension extends PassCompilerExtension
 
     public function __construct() 
     {
-        $this->addPass(new PartAPass());
-        $this->addPass(new PartBPass());
+        $this->addPass(new PartAPass($this));
+        $this->addPass(new PartBPass($this));
     }
 
 }
