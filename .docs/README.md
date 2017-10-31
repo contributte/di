@@ -6,6 +6,7 @@
 - [ContainerAware - inject container](#containeraware)
 - [MutableExtension - used in tests](#mutableextension)
 - [InjectValueExtension - inject parameters](#injectvalueextension)
+- [PassCompilerExtension - split big extension](#passcompilerextension)
 
 ## ResourceExtension
 
@@ -68,17 +69,17 @@ use Nette\DI\Container;
 final class LoggableCachedEventDispatcher implements IContainerAware
 {
 
-	/** @var Container */
-	protected $container;
+    /** @var Container */
+    protected $container;
 
-	/**
-	 * @param Container $container
-	 * @return void
-	 */
-	public function setContainer(Container $container)
-	{
-		$this->container = $container;
-	}
+    /**
+     * @param Container $container
+     * @return void
+     */
+    public function setContainer(Container $container)
+    {
+        $this->container = $container;
+    }
 
 }
 ```
@@ -121,7 +122,7 @@ $class = $loader->load(function (Compiler $compiler) {
 
 ## InjectValueExtension
 
-This **awesome** extension allowed to you inject values directly into public properties.
+This **awesome** extension allowed you to inject values directly into public properties.
 
 Let's say, we have service like this:
 
@@ -129,8 +130,8 @@ Let's say, we have service like this:
 class FooBarService
 {
 
-	/** @var string @value(%appDir%/baz) */
-	public $baz;
+    /** @var string @value(%appDir%/baz) */
+    public $baz;
 
 }
 ```
@@ -156,4 +157,44 @@ decorator:
 
     App\MyBasePresenter:
       tags: [inject.value]
+```
+
+## PassCompilerExtension
+
+With this extension you can split your big extension/configurtion into more compiler passes (symfony idea).
+
+```php
+use Contributte\DI\Extension\PassCompilerExtension;
+
+final class FoobarExtension extends PassCompilerExtension
+{
+
+    public function __construct() 
+    {
+        $this->addPass(new PartAPass());
+        $this->addPass(new PartBPass());
+    }
+
+}
+```
+
+Extending `AbstractPass` define 3 methods:
+
+- `loadPassConfiguration`
+- `beforePassCompile`
+- `afterPassCompile`
+
+```php
+use Contributte\DI\Pass\AbstractPass;
+
+class PartAPass extension AbstractPass
+{
+
+    public function loadPassConfiguration()
+    {
+        $builder = $this->extension->getCompilerBuilder();
+        // ...
+    }
+
+}
 ```
