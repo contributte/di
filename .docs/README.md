@@ -56,7 +56,8 @@ This package provide missing `IContainerAware` interface for you Applications.
 extensions:
     aware: Contributte\DI\Extension\ContainerAwareExtension
 ```
-At this moment you can use `IContainerAware` interface and let container to be injected.
+
+From that moment you can use `IContainerAware` interface and let container inject.
 
 ```php
 <?php
@@ -110,10 +111,17 @@ This extension is suitable for testing.
 $loader = new ContainerLoader(TEMP_DIR, TRUE);
 $class = $loader->load(function (Compiler $compiler) {
     $compiler->addExtension('x', $mutable = new MutableExtension());
+
+    // called -> loadConfiguration()
     $mutable->onLoad[] = function (CompilerExtension $ext, ContainerBuilder $builder) {
         $builder->addDefinition($ext->prefix('request'))
             ->setClass(Request::class)
             ->setFactory(RequestFactory::class . '::createHttpRequest');
+    }; 
+
+    // called -> beforeCompile()
+    $mutable->onBefore[] = function (CompilerExtension $ext, ContainerBuilder $builder) {
+        $classes = $builder->findByDefinition(Xyz::class);
     };
     
     ', 'neon'));
@@ -122,16 +130,16 @@ $class = $loader->load(function (Compiler $compiler) {
 
 ## InjectValueExtension
 
-This **awesome** extension allowed you to inject values directly into public properties.
+This **awesome** extension allow you to inject values directly into public properties.
 
 Let's say, we have service like this:
 
 ```php
-class FooBarService
+class FooPresenter extends Presenter
 {
 
     /** @var string @value(%appDir%/baz) */
-    public $baz;
+    public $bar;
 
 }
 ```
@@ -159,9 +167,11 @@ decorator:
       tags: [inject.value]
 ```
 
+After all, the when the `FooPresenter` in created it will have filled `$bar` property with `<path>/www/baz`. Cool right?
+
 ## PassCompilerExtension
 
-With this extension you can split your big extension/configuration into more compiler passes (symfony idea).
+With this extension you can split your big extension/configuration into more compiler passes (Symfony idea).
 
 ```php
 use Contributte\DI\Extension\PassCompilerExtension;
