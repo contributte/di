@@ -151,7 +151,11 @@ class ResourceExtension extends CompilerExtension
 	protected function createLoader()
 	{
 		$robot = new RobotLoader();
-		$robot->setCacheStorage(new DevNullStorage());
+
+		// From version >=3.0.0, there's no setCacheStorage method
+		if (method_exists($robot, 'setCacheStorage')) {
+			$robot->setCacheStorage(new DevNullStorage());
+		}
 
 		return $robot;
 	}
