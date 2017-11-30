@@ -225,7 +225,7 @@ extensions:
     baz2: App\DI\Baz2Extension
 ```
 
-`bar` & `baz` require to have `foo` registered. How can resolve id?
+The `bar` & `baz` require to have `foo` registered. How can resolve it?
 
 At first you have to replace default `extensions` extension, yes, it's name is `extensions`! Change it manually
 or via `ConfiguratorHelper` class.
@@ -240,7 +240,7 @@ $configurator->defaultExtensions['extensions'] = Contributte\DI\Extension\NewExt
 
 ```php
 $configurator = new Configurator();
-ConfiguratorHelper::upgrade($configurator);
+Contributte\DI\ConfiguratorHelper::upgrade($configurator);
 ```
 
 **New-way how to register extensions**
@@ -256,6 +256,7 @@ extensions:
     # Register with priority
     bar:
         class: App\DI\BarExtension
+        # default priority is 10, you can omit it
         priority: 10
     foo:
         class: App\DI\FooExtension
