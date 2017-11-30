@@ -7,6 +7,7 @@
 - [MutableExtension - used in tests](#mutableextension)
 - [InjectValueExtension - inject parameters](#injectvalueextension)
 - [PassCompilerExtension - split big extension](#passcompilerextension)
+- [NewExtensionsExtension - powerful extensions](#newextensionsextension)
 
 ## ResourceExtension
 
@@ -207,4 +208,56 @@ class PartAPass extension AbstractPass
     }
 
 }
+```
+
+## NewExtensionsExtension
+
+From time to time you get into the point when you have a lot of extensions. Some depends on others and reverse. 
+Therefore comes the need of `NewExtensionsExtension`.
+
+In classic Nette application you will see something like that:
+
+```yaml
+extensions:
+    foo: App\DI\FooExtension
+    bar: App\DI\BarExtension
+    baz1: App\DI\Baz1Extension
+    baz2: App\DI\Baz2Extension
+```
+
+`bar` & `baz` require to have `foo` registered. How can resolve id?
+
+At first you have to replace default `extensions` extension, yes, it's name is `extensions`! Change it manually
+or via `ConfiguratorHelper` class.
+
+**Manual replacement**
+
+```php
+$configurator->defaultExtensions['extensions'] = Contributte\DI\Extension\NewExtensionsExtension::class;
+```
+
+**ConfiguratorHelper**
+
+```php
+$configurator = new Configurator();
+ConfiguratorHelper::upgrade($configurator);
+```
+
+**New-way how to register extensions**
+
+```yaml
+extensions:
+    # Register by key
+    baz1: App\DI\Baz1Extension
+    
+    # Register unnamed
+    - App\DI\Baz2Extension
+    
+    # Register with priority
+    bar:
+        class: App\DI\BarExtension
+        priority: 10
+    foo:
+        class: App\DI\FooExtension
+        priority: 5
 ```
