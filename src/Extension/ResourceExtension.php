@@ -6,6 +6,7 @@ use Nette\Caching\Storages\DevNullStorage;
 use Nette\DI\CompilerExtension;
 use Nette\DI\Helpers;
 use Nette\DI\Statement;
+use Nette\InvalidStateException;
 use Nette\Loaders\RobotLoader;
 use Nette\Utils\Arrays;
 use Nette\Utils\Strings;
@@ -150,6 +151,10 @@ class ResourceExtension extends CompilerExtension
 	 */
 	protected function createLoader()
 	{
+		if (!class_exists('Nette\Loaders\RobotLoader')) {
+			throw new InvalidStateException('Install nette/robot-loader at first');
+		}
+
 		$robot = new RobotLoader();
 
 		// From version >=3.0.0, there's no setCacheStorage method
