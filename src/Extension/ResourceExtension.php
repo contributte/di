@@ -71,6 +71,9 @@ class ResourceExtension extends CompilerExtension
 			$counter = 1;
 			$name = preg_replace('#\W+#', '_', '.' . $namespace);
 			foreach ($classes as $class) {
+				// Check already registered classes
+				if ($builder->getByType($class)) return;
+
 				$def = $builder->addDefinition($this->prefix($name . '.' . ($counter++)))
 					->setClass($class);
 
