@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Contributte\DI\Extension;
 
@@ -6,25 +6,20 @@ use Nette\DI\Extensions\ExtensionsExtension;
 use Nette\DI\Statement;
 use Nette\InvalidStateException;
 
-/**
- * @author Milan Felix Sulc <sulcmil@gmail.com>
- */
 class NewExtensionsExtension extends ExtensionsExtension
 {
 
 	/**
 	 * Register other extensions with pleasure.
-	 *
-	 * @return void
 	 */
-	public function loadConfiguration()
+	public function loadConfiguration(): void
 	{
 		$extensions = [];
 
 		// Collect all extensions
 		foreach ($this->getConfig() as $name => $extension) {
 			if (is_int($name)) {
-				$name = NULL;
+				$name = null;
 			}
 
 			if (is_array($extension)) {
@@ -42,14 +37,14 @@ class NewExtensionsExtension extends ExtensionsExtension
 					'arguments' => [],
 					'priority' => $extension['priority'],
 				];
-			} else if ($extension instanceof Statement) {
+			} elseif ($extension instanceof Statement) {
 				$extensions[] = [
 					'name' => $name,
 					'class' => $extension->getEntity(),
 					'arguments' => $extension->arguments,
 					'priority' => $extension['priority'],
 				];
-			} else if (is_string($extension)) {
+			} elseif (is_string($extension)) {
 				$extensions[] = [
 					'name' => $name,
 					'class' => $extension,

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Tests\Fixtures\Bar;
 
@@ -10,19 +10,12 @@ final class BarService
 	/** @var stdClass */
 	private $logger;
 
-	/**
-	 * @param stdClass $logger
-	 * @return void
-	 */
-	public function setLogger(stdClass $logger)
+	public function setLogger(stdClass $logger): void
 	{
 		$this->logger = $logger;
 	}
 
-	/**
-	 * @return stdClass
-	 */
-	public function getLogger()
+	public function getLogger(): stdClass
 	{
 		return $this->logger;
 	}

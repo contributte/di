@@ -26,16 +26,18 @@ composer require contributte/di
 
 | State       | Version | Branch   | PHP      |
 |-------------|---------|----------|----------|
+| dev         | `^0.4`  | `master` | `>= 7.1` |
+| stable      | `^0.3`  | `master` | `>= 7.1` |
 | stable      | `^0.2`  | `master` | `>= 5.6` |
 
 ## Overview
 
-- [ResourceExtension - autoload classes by definition](https://github.com/contributte/di/blob/master/.docs/README.md#resourceextension)
-- [ContainerAware - inject container](https://github.com/contributte/di/blob/master/.docs/README.md#containeraware)
-- [MutableExtension - testing extension](https://github.com/contributte/di/blob/master/.docs/README.md#mutableetension)
-- [InjectValueExtension - inject parameters](https://github.com/contributte/di/blob/master/.docs/README.md#injectvalueextension)
-- [PassCompilerExtension - split big extension](https://github.com/contributte/di/blob/master/.docs/README.md#passcompilerextension)
-- [NewExtensionsExtension - powerful extensions](https://github.com/contributte/di/blob/master/.docs/README.md#newextensionsextension)
+- [ResourceExtension - autoload classes by definition](/.docs/README.md#resourceextension)
+- [ContainerAware - inject container](/.docs/README.md#containeraware)
+- [MutableExtension - testing extension](/.docs/README.md#mutableetension)
+- [InjectValueExtension - inject parameters](/.docs/README.md#injectvalueextension)
+- [PassCompilerExtension - split big extension](/.docs/README.md#passcompilerextension)
+- [NewExtensionsExtension - powerful extensions](/.docs/README.md#newextensionsextension)
 
 ## Maintainers
 
@@ -48,6 +50,13 @@ composer require contributte/di
         </a>
         </br>
         <a href="https://github.com/f3l1x">Milan Felix Šulc</a>
+      </td>
+      <td align="center">
+        <a href="https://github.com/mabar">
+            <img width="150" height="150" src="https://avatars0.githubusercontent.com/u/20974277?s=400&v=4">
+        </a>
+        </br>
+        <a href="https://github.com/mabar">Marek Bartoš</a>
       </td>
     </tr>
   <tbody>

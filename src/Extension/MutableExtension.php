@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Contributte\DI\Extension;
 
@@ -6,48 +6,37 @@ use Nette\DI\CompilerExtension;
 use Nette\PhpGenerator\ClassType;
 use Nette\SmartObject;
 
-/**
- * @author Milan Felix Sulc <sulcmil@gmail.com>
- */
 final class MutableExtension extends CompilerExtension
 {
 
 	use SmartObject;
 
-	/** @var array */
+	/** @var callable[] function (MutableExtension $extension, \Nette\DI\ContainerBuilder $builder, array $config); */
 	public $onLoad = [];
 
-	/** @var array */
+	/** @var callable[] function (MutableExtension $extension, \Nette\DI\ContainerBuilder $builder, array $config); */
 	public $onBefore = [];
 
-	/** @var array */
+	/** @var callable[] function (MutableExtension $extension, ClassType $class, array $config); */
 	public $onAfter = [];
 
 	/**
 	 * Register services
-	 *
-	 * @return void
 	 */
-	public function loadConfiguration()
+	public function loadConfiguration(): void
 	{
 		$this->onLoad($this, $this->getContainerBuilder(), $this->getConfig());
 	}
 
 	/**
 	 * Decorate services
-	 *
-	 * @return void
 	 */
-	public function beforeCompile()
+	public function beforeCompile(): void
 	{
 		$this->onBefore($this, $this->getContainerBuilder(), $this->getConfig());
 	}
 
-	/**
-	 * @param ClassType $class
-	 * @return void
-	 */
-	public function afterCompile(ClassType $class)
+	public function afterCompile(ClassType $class): void
 	{
 		$this->onAfter($this, $class, $this->getConfig());
 	}

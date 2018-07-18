@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 /**
  * Test: Extension\ResourceExtension
@@ -20,9 +20,9 @@ use Tests\Fixtures\Foo\FooService;
 require_once __DIR__ . '/../../bootstrap.php';
 
 // Autoload services
-test(function () {
-	$loader = new ContainerLoader(TEMP_DIR, TRUE);
-	$class = $loader->load(function (Compiler $compiler) {
+test(function (): void {
+	$loader = new ContainerLoader(TEMP_DIR, true);
+	$class = $loader->load(function (Compiler $compiler): void {
 		$compiler->addExtension('autoload', new ResourceExtension());
 		$compiler->addConfig(['parameters' => ['appDir' => TESTER_DIR]]);
 		$compiler->loadConfig(FileMock::create('
@@ -41,9 +41,9 @@ test(function () {
 });
 
 // Skip interface & abstract classes
-test(function () {
-	$loader = new ContainerLoader(TEMP_DIR, TRUE);
-	$class = $loader->load(function (Compiler $compiler) {
+test(function (): void {
+	$loader = new ContainerLoader(TEMP_DIR, true);
+	$class = $loader->load(function (Compiler $compiler): void {
 		$compiler->addExtension('autoload', new ResourceExtension());
 		$compiler->addConfig(['parameters' => ['appDir' => TESTER_DIR]]);
 		$compiler->loadConfig(FileMock::create('
@@ -61,9 +61,9 @@ test(function () {
 });
 
 // Multiple resources
-test(function () {
-	$loader = new ContainerLoader(TEMP_DIR, TRUE);
-	$class = $loader->load(function (Compiler $compiler) {
+test(function (): void {
+	$loader = new ContainerLoader(TEMP_DIR, true);
+	$class = $loader->load(function (Compiler $compiler): void {
 		$compiler->addExtension('autoload', new ResourceExtension());
 		$compiler->addConfig(['parameters' => ['appDir' => TESTER_DIR]]);
 		$compiler->loadConfig(FileMock::create('
@@ -86,9 +86,9 @@ test(function () {
 });
 
 // Exclude namespace
-test(function () {
-	$loader = new ContainerLoader(TEMP_DIR, TRUE);
-	$class = $loader->load(function (Compiler $compiler) {
+test(function (): void {
+	$loader = new ContainerLoader(TEMP_DIR, true);
+	$class = $loader->load(function (Compiler $compiler): void {
 		$compiler->addExtension('autoload', new ResourceExtension());
 		$compiler->addConfig(['parameters' => ['appDir' => TESTER_DIR]]);
 		$compiler->loadConfig(FileMock::create('
@@ -104,16 +104,16 @@ test(function () {
 	$container = new $class();
 
 	Assert::type('object', $container->getByType(BazService::class));
-	Assert::throws(function () use ($container) {
+	Assert::throws(function () use ($container): void {
 		$container->getByType(NestedBazService::class);
 	}, MissingServiceException::class, sprintf('Service of type %s not found.', NestedBazService::class));
 });
 
 // Invalid resource - must end with /
-test(function () {
-	Assert::throws(function () {
-		$loader = new ContainerLoader(TEMP_DIR, TRUE);
-		$class = $loader->load(function (Compiler $compiler) {
+test(function (): void {
+	Assert::throws(function (): void {
+		$loader = new ContainerLoader(TEMP_DIR, true);
+		$class = $loader->load(function (Compiler $compiler): void {
 			$compiler->addExtension('autoload', new ResourceExtension());
 			$compiler->loadConfig(FileMock::create('
 		autoload:
@@ -128,9 +128,9 @@ test(function () {
 });
 
 // Exclude whole namespace
-test(function () {
-	$loader = new ContainerLoader(TEMP_DIR, TRUE);
-	$class = $loader->load(function (Compiler $compiler) {
+test(function (): void {
+	$loader = new ContainerLoader(TEMP_DIR, true);
+	$class = $loader->load(function (Compiler $compiler): void {
 		$compiler->addExtension('autoload', new ResourceExtension());
 		$compiler->addConfig(['parameters' => ['appDir' => TESTER_DIR]]);
 		$compiler->loadConfig(FileMock::create('
@@ -145,18 +145,18 @@ test(function () {
 	/** @var Container $container */
 	$container = new $class();
 
-	Assert::throws(function () use ($container) {
+	Assert::throws(function () use ($container): void {
 		$container->getByType(BazService::class);
 	}, MissingServiceException::class, sprintf('Service of type %s not found.', BazService::class));
-	Assert::throws(function () use ($container) {
+	Assert::throws(function () use ($container): void {
 		$container->getByType(NestedBazService::class);
 	}, MissingServiceException::class, sprintf('Service of type %s not found.', NestedBazService::class));
 });
 
 // Paths as string
-test(function () {
-	$loader = new ContainerLoader(TEMP_DIR, TRUE);
-	$class = $loader->load(function (Compiler $compiler) {
+test(function (): void {
+	$loader = new ContainerLoader(TEMP_DIR, true);
+	$class = $loader->load(function (Compiler $compiler): void {
 		$compiler->addExtension('autoload', new ResourceExtension());
 		$compiler->addConfig(['parameters' => ['appDir' => TESTER_DIR]]);
 		$compiler->loadConfig(FileMock::create('
@@ -174,9 +174,9 @@ test(function () {
 });
 
 // Decorate services - add tags
-test(function () {
-	$loader = new ContainerLoader(TEMP_DIR, TRUE);
-	$class = $loader->load(function (Compiler $compiler) {
+test(function (): void {
+	$loader = new ContainerLoader(TEMP_DIR, true);
+	$class = $loader->load(function (Compiler $compiler): void {
 		$compiler->addExtension('autoload', new ResourceExtension());
 		$compiler->addConfig(['parameters' => ['appDir' => TESTER_DIR]]);
 		$compiler->loadConfig(FileMock::create('
@@ -196,9 +196,9 @@ test(function () {
 });
 
 // Decorate services - add setup
-test(function () {
-	$loader = new ContainerLoader(TEMP_DIR, TRUE);
-	$class = $loader->load(function (Compiler $compiler) {
+test(function (): void {
+	$loader = new ContainerLoader(TEMP_DIR, true);
+	$class = $loader->load(function (Compiler $compiler): void {
 		$compiler->addExtension('autoload', new ResourceExtension());
 		$compiler->addConfig(['parameters' => ['appDir' => TESTER_DIR]]);
 		$compiler->loadConfig(FileMock::create('
@@ -222,9 +222,9 @@ test(function () {
 });
 
 // Decorate services - add setup
-test(function () {
-	$loader = new ContainerLoader(TEMP_DIR, TRUE);
-	$class = $loader->load(function (Compiler $compiler) {
+test(function (): void {
+	$loader = new ContainerLoader(TEMP_DIR, true);
+	$class = $loader->load(function (Compiler $compiler): void {
 		$compiler->addExtension('autoload', new ResourceExtension());
 		$compiler->addConfig(['parameters' => ['appDir' => TESTER_DIR]]);
 		$compiler->loadConfig(FileMock::create('
@@ -240,5 +240,5 @@ test(function () {
 	/** @var Container $container */
 	$container = new $class();
 
-	Assert::null($container->getByType(BarService::class, FALSE));
+	Assert::null($container->getByType(BarService::class, false));
 });

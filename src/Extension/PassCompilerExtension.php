@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Contributte\DI\Extension;
 
@@ -12,11 +12,7 @@ abstract class PassCompilerExtension extends CompilerExtension
 	/** @var AbstractPass[] */
 	protected $passes = [];
 
-	/**
-	 * @param AbstractPass $pass
-	 * @return self
-	 */
-	protected function addPass(AbstractPass $pass)
+	protected function addPass(AbstractPass $pass): self
 	{
 		$this->passes[] = $pass;
 
@@ -25,10 +21,8 @@ abstract class PassCompilerExtension extends CompilerExtension
 
 	/**
 	 * Register services
-	 *
-	 * @return void
 	 */
-	public function loadConfiguration()
+	public function loadConfiguration(): void
 	{
 		// Trigger passes
 		foreach ($this->passes as $pass) {
@@ -38,10 +32,8 @@ abstract class PassCompilerExtension extends CompilerExtension
 
 	/**
 	 * Decorate services
-	 *
-	 * @return void
 	 */
-	public function beforeCompile()
+	public function beforeCompile(): void
 	{
 		// Trigger passes
 		foreach ($this->passes as $pass) {
@@ -49,11 +41,7 @@ abstract class PassCompilerExtension extends CompilerExtension
 		}
 	}
 
-	/**
-	 * @param ClassType $class
-	 * @return void
-	 */
-	public function afterCompile(ClassType $class)
+	public function afterCompile(ClassType $class): void
 	{
 		// Trigger passes
 		foreach ($this->passes as $pass) {

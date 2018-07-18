@@ -37,7 +37,7 @@ autoload:
     App\Model\Services\:
       paths: [%appDir%/model/services]
       excludes: [App\Model\Services\Gopay, App\Model\Services\CustomService\Testing]
-      decorator: 
+      decorator:
         tags: [autoload]
         setup:
           - setLogger(@customlogger)
@@ -46,7 +46,7 @@ autoload:
 
 ### Performance
 
-Service loading is triggered only once at dependency injection container compile-time. You should be pretty fast, 
+Service loading is triggered only once at dependency injection container compile-time. You should be pretty fast,
 almost as [official registering presenter as services](https://api.nette.org/2.4/source-Bridges.ApplicationDI.ApplicationExtension.php.html#121-160).
 
 ## ContainerAware
@@ -74,11 +74,7 @@ final class LoggableCachedEventDispatcher implements IContainerAware
     /** @var Container */
     protected $container;
 
-    /**
-     * @param Container $container
-     * @return void
-     */
-    public function setContainer(Container $container)
+    public function setContainer(Container $container): void
     {
         $this->container = $container;
     }
@@ -110,21 +106,21 @@ This extension is suitable for testing.
 
 ```php
 $loader = new ContainerLoader(TEMP_DIR, TRUE);
-$class = $loader->load(function (Compiler $compiler) {
+$class = $loader->load(function (Compiler $compiler): void {
     $compiler->addExtension('x', $mutable = new MutableExtension());
 
     // called -> loadConfiguration()
-    $mutable->onLoad[] = function (CompilerExtension $ext, ContainerBuilder $builder) {
+    $mutable->onLoad[] = function (CompilerExtension $ext, ContainerBuilder $builder): void {
         $builder->addDefinition($ext->prefix('request'))
             ->setClass(Request::class)
             ->setFactory(RequestFactory::class . '::createHttpRequest');
-    }; 
+    };
 
     // called -> beforeCompile()
-    $mutable->onBefore[] = function (CompilerExtension $ext, ContainerBuilder $builder) {
+    $mutable->onBefore[] = function (CompilerExtension $ext, ContainerBuilder $builder): void {
         $classes = $builder->findByDefinition(Xyz::class);
     };
-    
+
     ', 'neon'));
 }, time());
 ```
@@ -149,14 +145,14 @@ At first register `InjectValueExtension` under `extensions` key.
 
 ```yaml
 extensions:
-    injectvalue: Contributte\DI\Extension\InjectValueExtension
-    
-injectvalue:
+    injectValue: Contributte\DI\Extension\InjectValueExtension
+
+injectValue:
     all: on/off
 ```
 
 By default, extension `inject values` only for services having `inject.value` tag.
-You can override it to inject to all services by define `all: on`. Or follow the prefer way 
+You can override it to inject to all services by define `all: on`. Or follow the prefer way
 and use Nette\DI decorator.
 
 ```yaml
@@ -180,7 +176,7 @@ use Contributte\DI\Extension\PassCompilerExtension;
 final class FoobarExtension extends PassCompilerExtension
 {
 
-    public function __construct() 
+    public function __construct()
     {
         $this->addPass(new PartAPass($this));
         $this->addPass(new PartBPass($this));
@@ -201,7 +197,7 @@ use Contributte\DI\Pass\AbstractPass;
 class PartAPass extension AbstractPass
 {
 
-    public function loadPassConfiguration()
+    public function loadPassConfiguration(): void
     {
         $builder = $this->extension->getCompilerBuilder();
         // ...
@@ -212,7 +208,7 @@ class PartAPass extension AbstractPass
 
 ## NewExtensionsExtension
 
-From time to time you get into the point when you have a lot of extensions. Some depends on others and reverse. 
+From time to time you get into the point when you have a lot of extensions. Some depends on others and reverse.
 Therefore comes the need of `NewExtensionsExtension`.
 
 In classic Nette application you will see something like that:
@@ -249,10 +245,10 @@ Contributte\DI\ConfiguratorHelper::upgrade($configurator);
 extensions:
     # Register by key
     baz1: App\DI\Baz1Extension
-    
+
     # Register unnamed
     - App\DI\Baz2Extension
-    
+
     # Register with priority
     bar:
         class: App\DI\BarExtension

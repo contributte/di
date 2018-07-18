@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 /**
  * Test: Config\Schema
@@ -13,16 +13,16 @@ use Tester\Assert;
 require_once __DIR__ . '/../../bootstrap.php';
 
 // Unknown options
-test(function () {
-	Assert::exception(function () {
+test(function (): void {
+	Assert::exception(function (): void {
 		Schema::root()
 			->validate(['email' => 'foo@bar.baz', 'foo' => 1]);
 	}, InvalidStateException::class, 'Unknown configuration option email, foo');
 });
 
 // String validator
-test(function () {
-	Assert::exception(function () {
+test(function (): void {
+	Assert::exception(function (): void {
 		Schema::root()
 			->add(Node::create('email')->isString())
 			->validate(['email' => 25]);
@@ -30,8 +30,8 @@ test(function () {
 });
 
 // Integer validator
-test(function () {
-	Assert::exception(function () {
+test(function (): void {
+	Assert::exception(function (): void {
 		Schema::root()
 			->add(Node::create('count')->isInt())
 			->validate(['count' => '25']);
@@ -39,8 +39,8 @@ test(function () {
 });
 
 // Array validator
-test(function () {
-	Assert::exception(function () {
+test(function (): void {
+	Assert::exception(function (): void {
 		Schema::root()
 			->add(Node::create('data')->isArray())
 			->validate(['data' => 25]);
@@ -48,8 +48,8 @@ test(function () {
 });
 
 // Float validator
-test(function () {
-	Assert::exception(function () {
+test(function (): void {
+	Assert::exception(function (): void {
 		Schema::root()
 			->add(Node::create('count')->isFloat())
 			->validate(['count' => 1]);
@@ -57,8 +57,8 @@ test(function () {
 });
 
 // Children validator
-test(function () {
-	Assert::exception(function () {
+test(function (): void {
+	Assert::exception(function (): void {
 		Schema::root()
 			->add(Node::create('students')->children([
 				Node::create('name')->isString(),
@@ -66,7 +66,7 @@ test(function () {
 			->validate(['students' => 1]);
 	}, AssertionException::class, 'The variable "students" expects to be array, integer given.');
 
-	Assert::exception(function () {
+	Assert::exception(function (): void {
 		Schema::root()
 			->add(Node::create('students')->children([
 				Node::create('name')->isString(),
@@ -76,8 +76,8 @@ test(function () {
 });
 
 // Nested validator
-test(function () {
-	Assert::exception(function () {
+test(function (): void {
+	Assert::exception(function (): void {
 		Schema::root()
 			->add(Node::create('address')->nested([
 				Node::create('street')->isString(),
@@ -85,7 +85,7 @@ test(function () {
 			->validate(['address' => 1]);
 	}, AssertionException::class, 'The variable "address" expects to be array, integer given.');
 
-	Assert::exception(function () {
+	Assert::exception(function (): void {
 		Schema::root()
 			->add(Node::create('address')->nested([
 				Node::create('street')->isString(),
@@ -95,14 +95,14 @@ test(function () {
 });
 
 // Success data processing
-test(function () {
+test(function (): void {
 	$data = Schema::root()
 		->add(Node::create('url1')->isString())
 		->add(Node::create('url2')->isString()->setDefault('www.foo.baz2'))
 		->add(Node::create('url3')->isString()->nullable()->setDefault('www.foo.baz3'))
 		->process([
 			'url1' => 'www.foo.bar1',
-			'url3' => NULL,
+			'url3' => null,
 		]);
 
 	Assert::equal('www.foo.bar1', $data['url1']);
@@ -111,7 +111,7 @@ test(function () {
 });
 
 // Success data children processing
-test(function () {
+test(function (): void {
 	$data = Schema::root()
 		->add(Node::create('students')->children([
 			Node::create('name')->isString(),
@@ -136,7 +136,7 @@ test(function () {
 });
 
 // Success data nested processing
-test(function () {
+test(function (): void {
 	$data = Schema::root()
 		->add(Node::create('address')->nested([
 			Node::create('street')->isString(),
@@ -161,7 +161,7 @@ test(function () {
 });
 
 // Success data nested+children processing
-test(function () {
+test(function (): void {
 	$data = Schema::root()
 		->add(Node::create('students')->children([
 			Node::create('address')->nested([

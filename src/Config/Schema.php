@@ -1,24 +1,17 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Contributte\DI\Config;
 
 use Nette\InvalidStateException;
 use Nette\Utils\Arrays;
 
-/**
- * @author Milan Felix Sulc <sulcmil@gmail.com>
- */
 class Schema
 {
 
 	/** @var Node[] */
 	protected $nodes = [];
 
-	/**
-	 * @param Node $node
-	 * @return static
-	 */
-	public function add(Node $node)
+	public function add(Node $node): self
 	{
 		$this->nodes[$node->getName()] = $node;
 
@@ -26,12 +19,12 @@ class Schema
 	}
 
 	/**
-	 * @param array $values
-	 * @return void
+	 * @param mixed[] $values
 	 */
-	public function validate(array $values)
+	public function validate(array $values): void
 	{
-		if ($extra = array_diff_key((array) $values, $this->nodes)) {
+		$extra = array_diff_key($values, $this->nodes);
+		if ($extra !== []) {
 			$extra = implode(', ', array_keys($extra));
 			throw new InvalidStateException('Unknown configuration option ' . $extra);
 		}
@@ -43,10 +36,10 @@ class Schema
 	}
 
 	/**
-	 * @param array $values
-	 * @return array
+	 * @param mixed[] $values
+	 * @return mixed[]
 	 */
-	public function merge(array $values)
+	public function merge(array $values): array
 	{
 		$config = $values;
 
@@ -59,24 +52,17 @@ class Schema
 	}
 
 	/**
-	 * @param array $values
-	 * @return array
+	 * @param mixed[] $values
+	 * @return mixed[]
 	 */
-	public function process(array $values)
+	public function process(array $values): array
 	{
 		$this->validate($values);
 
 		return $this->merge($values);
 	}
 
-	/**
-	 * FACTORY *****************************************************************
-	 */
-
-	/**
-	 * @return Schema
-	 */
-	public static function root()
+	public static function root(): Schema
 	{
 		return new Schema();
 	}

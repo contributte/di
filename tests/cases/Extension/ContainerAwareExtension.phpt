@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 /**
  * Test: Extension\ContainerAwareExtension
@@ -15,9 +15,9 @@ use Tests\Fixtures\TestContainerAware;
 
 require_once __DIR__ . '/../../bootstrap.php';
 
-test(function () {
-	$loader = new ContainerLoader(TEMP_DIR, TRUE);
-	$class = $loader->load(function (Compiler $compiler) {
+test(function (): void {
+	$loader = new ContainerLoader(TEMP_DIR, true);
+	$class = $loader->load(function (Compiler $compiler): void {
 		$compiler->addExtension('aware', new ContainerAwareExtension());
 		$compiler->loadConfig(FileMock::create('
 		services:

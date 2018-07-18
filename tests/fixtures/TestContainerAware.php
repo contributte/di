@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Tests\Fixtures;
 
@@ -11,10 +11,7 @@ final class TestContainerAware implements IContainerAware
 
 	use TContainerAware;
 
-	/**
-	 * @return Container
-	 */
-	public function getContainer()
+	public function getContainer(): Container
 	{
 		return $this->container;
 	}
