@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Contributte\DI\Config;
 
@@ -6,13 +6,10 @@ use Nette\Utils\Arrays;
 use Nette\Utils\AssertionException;
 use Nette\Utils\Validators;
 
-/**
- * @author Milan Felix Sulc <sulcmil@gmail.com>
- */
 class Node
 {
 
-	const NOT_AVAILABLE = '\0\0\0\0\0';
+	public const NOT_AVAILABLE = '\0\0\0\0\0';
 
 	/** @var string */
 	private $name;
@@ -24,10 +21,10 @@ class Node
 	private $defaultValue;
 
 	/** @var bool */
-	private $nullable = FALSE;
+	private $nullable = false;
 
 	/** @var bool */
-	private $required = TRUE;
+	private $required = true;
 
 	/** @var Node[] */
 	private $children = [];
@@ -35,22 +32,12 @@ class Node
 	/** @var Node[] */
 	private $nested = [];
 
-	/**
-	 * @param string $name
-	 */
-	public function __construct($name)
+	public function __construct(string $name)
 	{
 		$this->name = $name;
 	}
 
-	/**
-	 * GETTERS *****************************************************************
-	 */
-
-	/**
-	 * @return string
-	 */
-	public function getName()
+	public function getName(): string
 	{
 		return $this->name;
 	}
@@ -64,78 +51,53 @@ class Node
 	}
 
 	/**
-	 * FLUENT SETTERS **********************************************************
-	 */
-
-	/**
 	 * @param mixed $value
-	 * @return static
 	 */
-	public function setDefault($value)
+	public function setDefault($value): self
 	{
 		$this->defaultValue = $value;
-		$this->required = FALSE;
+		$this->required = false;
 
 		return $this;
 	}
 
-	/**
-	 * @param bool $nullable
-	 * @return static
-	 */
-	public function nullable($nullable = TRUE)
+	public function nullable(bool $nullable = true): self
 	{
 		$this->nullable = $nullable;
 
 		return $this;
 	}
 
-	/**
-	 * VALIDATORS **************************************************************
-	 */
-
-	/**
-	 * @return static
-	 */
-	public function isString()
+	public function isString(): self
 	{
-		$this->validators['type'] = function ($value) {
+		$this->validators['type'] = function ($value): void {
 			Validators::assert($value, 'string', sprintf('variable "%s"', $this->getName()));
 		};
 
 		return $this;
 	}
 
-	/**
-	 * @return static
-	 */
-	public function isArray()
+	public function isArray(): self
 	{
-		$this->validators['type'] = function ($value) {
+		$this->validators['type'] = function ($value): void {
 			Validators::assert($value, 'array', sprintf('variable "%s"', $this->getName()));
 		};
 
 		return $this;
 	}
 
-	/**
-	 * @return static
-	 */
-	public function isInt()
+	public function isInt(): self
 	{
-		$this->validators['type'] = function ($value) {
+		$this->validators['type'] = function ($value): void {
 			Validators::assert($value, 'int', sprintf('variable "%s"', $this->getName()));
 		};
 
 		return $this;
 	}
 
-	/**
-	 * @return static
-	 */
-	public function isFloat()
+	public function isFloat(): self
 	{
-		$this->validators['type'] = function ($value) {
+		$this->validators['type'] = function ($value): void {
 			Validators::assert($value, 'float', sprintf('variable "%s"', $this->getName()));
 		};
 
@@ -143,10 +105,9 @@ class Node
 	}
 
 	/**
-	 * @param array $children
-	 * @return static
+	 * @param mixed[] $children
 	 */
-	public function children(array $children)
+	public function children(array $children): self
 	{
 		$this->isArray();
 		$this->children = $children;
@@ -155,10 +116,9 @@ class Node
 	}
 
 	/**
-	 * @param array $nested
-	 * @return static
+	 * @param mixed[] $nested
 	 */
-	public function nested(array $nested)
+	public function nested(array $nested): self
 	{
 		$this->isArray();
 		$this->nested = $nested;
@@ -167,27 +127,22 @@ class Node
 	}
 
 	/**
-	 * VALIDATION **************************************************************
-	 */
-
-	/**
 	 * @param mixed $value
-	 * @return void
 	 */
-	public function validate($value)
+	public function validate($value): void
 	{
 		// If given value is NA and default value is provided, then skip it
-		if ($value === self::NOT_AVAILABLE && $this->defaultValue !== NULL) return;
+		if ($value === self::NOT_AVAILABLE && $this->defaultValue !== null) return;
 
 		// If given value is NULL and nullable, then skip it
-		if ($value === NULL && $this->nullable === TRUE) return;
+		if ($value === null && $this->nullable === true) return;
 
 		// Otherwise, apply validators on given value
 		foreach ($this->validators as $validator) {
 			$validator($value);
 		}
 
-		if ($this->children) {
+		if ($this->children !== []) {
 			foreach ($this->children as $node) {
 				foreach ($value as $val) {
 					$v = Arrays::get($val, $node->getName(), self::NOT_AVAILABLE);
@@ -196,17 +151,13 @@ class Node
 			}
 		}
 
-		if ($this->nested) {
+		if ($this->nested !== []) {
 			foreach ($this->nested as $node) {
 				$v = Arrays::get($value, $node->getName(), self::NOT_AVAILABLE);
 				$node->validate($v);
 			}
 		}
 	}
-
-	/**
-	 * MERGING *****************************************************************
-	 */
 
 	/**
 	 * @param mixed $value
@@ -216,10 +167,10 @@ class Node
 	{
 		// If given value is NA and also node is not nullable and is required, throws an exception
 		if ($value === self::NOT_AVAILABLE
-			&& $this->required === TRUE
-			&& $this->nullable !== TRUE) throw new AssertionException(sprintf('The variable "%s" is required, null given.', $this->getName()));
+			&& $this->required === true
+			&& $this->nullable !== true) throw new AssertionException(sprintf('The variable "%s" is required, null given.', $this->getName()));
 
-		if ($this->children) {
+		if ($this->children !== []) {
 			$result = [];
 			foreach ($this->children as $node) {
 				foreach ($value as $key => $val) {
@@ -231,7 +182,7 @@ class Node
 			return $result;
 		}
 
-		if ($this->nested) {
+		if ($this->nested !== []) {
 			$result = [];
 			foreach ($this->nested as $node) {
 				$v = Arrays::get($value, $node->getName(), self::NOT_AVAILABLE);
@@ -245,18 +196,10 @@ class Node
 		if ($value !== self::NOT_AVAILABLE) return $value;
 
 		// Return default value or NULL
-		return $this->defaultValue ?: NULL;
+		return $this->defaultValue ?: null;
 	}
 
-	/**
-	 * FACTORY *****************************************************************
-	 */
-
-	/**
-	 * @param string $name
-	 * @return static
-	 */
-	public static function create($name)
+	public static function create(string $name): self
 	{
 		return new static($name);
 	}

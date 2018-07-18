@@ -1,22 +1,17 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Contributte\DI\Extension;
 
 use Contributte\DI\IContainerAware;
 use Nette\DI\CompilerExtension;
 
-/**
- * @author Milan Felix Sulc <sulcmil@gmail.com>
- */
 class ContainerAwareExtension extends CompilerExtension
 {
 
 	/**
 	 * Tweak DI container
-	 *
-	 * @return void
 	 */
-	public function beforeCompile()
+	public function beforeCompile(): void
 	{
 		$builder = $this->getContainerBuilder();
 

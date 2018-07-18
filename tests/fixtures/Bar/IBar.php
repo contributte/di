@@ -2,7 +2,7 @@
 
 namespace Tests\Fixtures\Bar;
 
-abstract class AbstractBar
+interface IBar
 {
 
 }

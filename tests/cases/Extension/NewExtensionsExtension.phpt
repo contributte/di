@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 /**
  * Test: Extension\NewExtensionsExtension
@@ -13,7 +13,7 @@ use Tests\Fixtures\Priority\FirstExtension;
 
 require_once __DIR__ . '/../../bootstrap.php';
 
-test(function () {
+test(function (): void {
 	$configurator = new Configurator();
 	ConfiguratorHelper::upgrade($configurator);
 	$configurator->setTempDirectory(TEMP_DIR);
@@ -37,6 +37,6 @@ test(function () {
 	$class = $configurator->createContainer();
 
 	/** @var Container $container */
-	$container = new $class;
+	$container = new $class();
 	Assert::type(FirstExtension::class, $container->getService('shared'));
 });

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Contributte\DI;
 
@@ -14,11 +14,8 @@ final class ConfiguratorHelper
 	 *
 	 * 1. Replace <extensions> compiler extension to our new extension.
 	 * 2. More coming.
-	 *
-	 * @param Configurator $configurator
-	 * @return void
 	 */
-	public static function upgrade(Configurator $configurator)
+	public static function upgrade(Configurator $configurator): void
 	{
 		$configurator->defaultExtensions['extensions'] = NewExtensionsExtension::class;
 	}

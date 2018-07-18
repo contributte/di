@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Contributte\DI\Extension;
 
@@ -11,23 +11,21 @@ use ReflectionProperty;
 class InjectValueExtension extends CompilerExtension
 {
 
-	const TAG_INJECT_VALUE = 'inject.value';
+	public const TAG_INJECT_VALUE = 'inject.value';
 
-	/** @var array */
+	/** @var mixed[] */
 	protected $defaults = [
-		'all' => FALSE,
+		'all' => false,
 	];
 
 	/**
 	 * Find all definitions and inject into @value
-	 *
-	 * @return void
 	 */
-	public function beforeCompile()
+	public function beforeCompile(): void
 	{
 		$config = $this->validateConfig($this->defaults);
 
-		$definitions = $config['all'] === TRUE
+		$definitions = $config['all'] === true
 			? $this->getContainerBuilder()->getDefinitions()
 			: array_map(
 				[$this->getContainerBuilder(), 'getDefinition'],
@@ -36,7 +34,7 @@ class InjectValueExtension extends CompilerExtension
 
 		foreach ($definitions as $def) {
 			// If class is not defined, then skip it
-			if (!$def->getClass()) continue;
+			if ($def->getClass() === null) continue;
 
 			// Inject @value into definitin
 			$this->inject($def);
@@ -45,13 +43,14 @@ class InjectValueExtension extends CompilerExtension
 
 	/**
 	 * Inject into @value property
-	 *
-	 * @param ServiceDefinition $def
-	 * @return void
 	 */
-	protected function inject(ServiceDefinition $def)
+	protected function inject(ServiceDefinition $def): void
 	{
-		foreach (get_class_vars($def->getClass()) as $name => $var) {
+		$class = $def->getClass();
+
+		if ($class === null) return;
+
+		foreach (get_class_vars($class) as $name => $var) {
 			$rp = new ReflectionProperty($def->getClass(), $name);
 
 			// Try to match property by regex
@@ -60,21 +59,17 @@ class InjectValueExtension extends CompilerExtension
 
 			// If there's no @value annotation or it's not in propel format,
 			// then skip it
-			if ($match === NULL) continue;
+			if ($match === null) continue;
 
 			// Hooray, we have a match!
-			list ($doc, $content) = $match;
+			 [$doc, $content] = $match;
 
 			// Expand content of @value and setup to definition
 			$def->addSetup('$' . $name, [$this->expand($content)]);
 		}
 	}
 
-	/**
-	 * @param string $value
-	 * @return string
-	 */
-	protected function expand($value)
+	protected function expand(string $value): string
 	{
 		return Helpers::expand($value, $this->compiler->getConfig()['parameters']);
 	}

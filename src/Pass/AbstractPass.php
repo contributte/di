@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Contributte\DI\Pass;
 
@@ -11,9 +11,6 @@ abstract class AbstractPass
 	/** @var CompilerExtension */
 	protected $extension;
 
-	/**
-	 * @param CompilerExtension $extension
-	 */
 	public function __construct(CompilerExtension $extension)
 	{
 		$this->extension = $extension;
@@ -21,27 +18,19 @@ abstract class AbstractPass
 
 	/**
 	 * Register services
-	 *
-	 * @return void
 	 */
-	public function loadPassConfiguration()
+	public function loadPassConfiguration(): void
 	{
 	}
 
 	/**
 	 * Decorate services
-	 *
-	 * @return void
 	 */
-	public function beforePassCompile()
+	public function beforePassCompile(): void
 	{
 	}
 
-	/**
-	 * @param ClassType $class
-	 * @return void
-	 */
-	public function afterPassCompile(ClassType $class)
+	public function afterPassCompile(ClassType $class): void
 	{
 	}
 
