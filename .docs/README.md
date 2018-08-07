@@ -22,8 +22,9 @@ Secondly, define some resources.
 
 ```yaml
 autoload:
-    App\Model\Services\:
-      paths: [%appDir%/model/services]
+    resources:
+        App\Model\Services\:
+            paths: [%appDir%/model/services]
 ```
 
 > It maybe looks familiar to you. You're right idea comes from [Symfony 3.3](http://symfony.com/doc/current/service_container/3.3-di-changes.html#the-new-default-services-yml-file).
