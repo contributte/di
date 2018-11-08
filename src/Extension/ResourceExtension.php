@@ -70,7 +70,7 @@ class ResourceExtension extends CompilerExtension
 				if ($builder->getByType($class) !== null) return;
 
 				$def = $builder->addDefinition($this->prefix($name . '.' . ($counter++)))
-					->setClass($class);
+					->setFactory($class);
 
 				// Merge and validace decorator config
 				$decorator = $this->validateConfig($this->decorator, $resource['decorator'], $namespace);

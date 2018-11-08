@@ -34,7 +34,7 @@ class InjectValueExtension extends CompilerExtension
 
 		foreach ($definitions as $def) {
 			// If class is not defined, then skip it
-			if ($def->getClass() === null) continue;
+			if ($def->getType() === null) continue;
 
 			// Inject @value into definitin
 			$this->inject($def);
@@ -46,12 +46,12 @@ class InjectValueExtension extends CompilerExtension
 	 */
 	protected function inject(ServiceDefinition $def): void
 	{
-		$class = $def->getClass();
+		$class = $def->getType();
 
 		if ($class === null) return;
 
 		foreach (get_class_vars($class) as $name => $var) {
-			$rp = new ReflectionProperty($def->getClass(), $name);
+			$rp = new ReflectionProperty($def->getType(), $name);
 
 			// Try to match property by regex
 			// https://regex101.com/r/D6gc21/1
