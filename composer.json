@@ -23,7 +23,7 @@
   "require-dev": {
     "ninjify/qa": "^0.8.0",
     "ninjify/nunjuck": "^0.2.0",
-    "nette/robot-loader": "~2.4.4|~3.0.4",
+    "nette/robot-loader": "~2.4.4|~3.0.4|~3.1.0",
     "nette/reflection": "~2.4.2",
     "nette/bootstrap": "~2.4.6"
   },
