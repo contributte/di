@@ -15,4 +15,5 @@
 
     <!-- Exclude folders -->
     <exclude-pattern>/tests/tmp</exclude-pattern>
+    <exclude-pattern>/tests/cases/Decorator/Decorator.phpt</exclude-pattern>
 </ruleset>

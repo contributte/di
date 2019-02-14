@@ -8,6 +8,7 @@
 - [InjectValueExtension - inject parameters](#injectvalueextension)
 - [PassCompilerExtension - split big extension](#passcompilerextension)
 - [NewExtensionsExtension - powerful extensions](#newextensionsextension)
+- [Decorator - nette decorator in extension](#decorator)
 
 ## ResourceExtension
 
@@ -258,4 +259,25 @@ extensions:
     foo:
         class: App\DI\FooExtension
         priority: 5
+```
+
+## Decorator
+Decorator finds all definitions by given type and add tags and setup as you know in decorator section in neon 
+
+```php
+use Contributte\DI\Decorator\Decorator;
+use Nette\DI\CompilerExtension;
+
+final class FooExtension extends CompilerExtension
+{
+
+    public function beforeCompile(): void
+    {
+        $decorator = new Decorator($this->getContainerBuilder());
+        $decorator->decorate(BaseGrid::class)
+        	->addSetup('injectGrid')
+        	->addTags(['grid']);
+    }
+
+}
 ```
