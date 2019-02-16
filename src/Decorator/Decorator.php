@@ -2,6 +2,7 @@
 
 namespace Contributte\DI\Decorator;
 
+use Contributte\DI\Exception\Logical\ClassNotExistsException;
 use Nette\DI\ContainerBuilder;
 use Nette\DI\ServiceDefinition;
 
@@ -11,9 +12,14 @@ final class Decorator
 	/** @var ContainerBuilder */
 	private $builder;
 
-	public function __construct(ContainerBuilder $builder)
+	private function __construct(ContainerBuilder $builder)
 	{
 		$this->builder = $builder;
+	}
+
+	public static function of(ContainerBuilder $builder): self
+	{
+		return new self($builder);
 	}
 
 	public function decorate(string $type): DecorateDefinition

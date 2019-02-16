@@ -34,7 +34,7 @@ test(function (): void {
 			{
 				$builder = $this->getContainerBuilder();
 
-				$decorator = new Decorator($builder);
+				$decorator = Decorator::of($builder);
 				$decorator->decorate(Base::class)
 					->addSetup('setup', [
 						'bar' => 'foo',

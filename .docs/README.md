@@ -2,13 +2,17 @@
 
 ## Content
 
-- [ResourceExtension - autoload classes by definitions](#resourceextension)
-- [ContainerAware - inject container](#containeraware)
-- [MutableExtension - used in tests](#mutableextension)
-- [InjectValueExtension - inject parameters](#injectvalueextension)
-- [PassCompilerExtension - split big extension](#passcompilerextension)
-- [NewExtensionsExtension - powerful extensions](#newextensionsextension)
-- [Decorator - nette decorator in extension](#decorator)
+- [Dependency Injection (DI)](#dependency-injection-di)
+  - [Content](#content)
+  - [ResourceExtension](#resourceextension)
+    - [Resources](#resources)
+    - [Performance](#performance)
+  - [ContainerAware](#containeraware)
+  - [MutableExtension](#mutableextension)
+  - [InjectValueExtension](#injectvalueextension)
+  - [PassCompilerExtension](#passcompilerextension)
+  - [NewExtensionsExtension](#newextensionsextension)
+  - [Decorator](#decorator)
 
 ## ResourceExtension
 
@@ -262,7 +266,8 @@ extensions:
 ```
 
 ## Decorator
-Decorator finds all definitions by given type and add tags and setup as you know in decorator section in neon 
+
+Using decorator you can programmatically decorate services. It finds all definitions by given type and add tags and setup as you know in decorator section in neon. Useful in libraries.
 
 ```php
 use Contributte\DI\Decorator\Decorator;
@@ -273,8 +278,8 @@ final class FooExtension extends CompilerExtension
 
     public function beforeCompile(): void
     {
-        $decorator = new Decorator($this->getContainerBuilder());
-        $decorator->decorate(BaseGrid::class)
+        Decorator::of($this->getContainerBuilder())
+          ->decorate(BaseGrid::class);
         	->addSetup('injectGrid')
         	->addTags(['grid']);
     }

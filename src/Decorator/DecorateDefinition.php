@@ -5,9 +5,6 @@ namespace Contributte\DI\Decorator;
 use Nette\DI\ServiceDefinition;
 use Nette\Utils\Arrays;
 
-/**
- * @internal
- */
 final class DecorateDefinition
 {
 

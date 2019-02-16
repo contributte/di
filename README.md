@@ -38,6 +38,7 @@ composer require contributte/di
 - [InjectValueExtension - inject parameters](/.docs/README.md#injectvalueextension)
 - [PassCompilerExtension - split big extension](/.docs/README.md#passcompilerextension)
 - [NewExtensionsExtension - powerful extensions](/.docs/README.md#newextensionsextension)
+  - [Decorator](#decorator)
 
 ## Maintainers
 
