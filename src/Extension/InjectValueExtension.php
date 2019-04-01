@@ -69,7 +69,10 @@ class InjectValueExtension extends CompilerExtension
 		}
 	}
 
-	protected function expand(string $value): string
+	/**
+	 * @return mixed
+	 */
+	protected function expand(string $value)
 	{
 		return Helpers::expand($value, $this->compiler->getConfig()['parameters']);
 	}
