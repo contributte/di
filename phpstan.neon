@@ -1,9 +1,3 @@
-includes:
-	- temp/phpstan/vendor/phpstan/phpstan-deprecation-rules/rules.neon
-	- temp/phpstan/vendor/phpstan/phpstan-nette/extension.neon
-	- temp/phpstan/vendor/phpstan/phpstan-nette/rules.neon
-	- temp/phpstan/vendor/phpstan/phpstan-strict-rules/rules.neon
-
 parameters:
 	ignoreErrors:
 		- '#^Method Contributte\\DI\\Extension\\ResourceExtension::findClasses\(\) should return array<string> but returns array<int, int|string>.$#'
