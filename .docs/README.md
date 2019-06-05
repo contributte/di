@@ -1,7 +1,8 @@
-# Dependency Injection (DI)
+# Contributte DI (Dependency Injection)
 
 ## Content
 
+- [Setup](#setup)
 - [Dependency Injection (DI)](#dependency-injection-di)
   - [Content](#content)
   - [ResourceExtension](#resourceextension)
@@ -13,6 +14,12 @@
   - [PassCompilerExtension](#passcompilerextension)
   - [NewExtensionsExtension](#newextensionsextension)
   - [Decorator](#decorator)
+
+## Setup
+
+```bash
+composer require contributte/di
+```
 
 ## ResourceExtension
 
@@ -200,7 +207,7 @@ Extending `AbstractPass` defines 3 methods:
 ```php
 use Contributte\DI\Pass\AbstractPass;
 
-class PartAPass extension AbstractPass
+class PartAPass extends AbstractPass
 {
 
     public function loadPassConfiguration(): void
@@ -279,7 +286,7 @@ final class FooExtension extends CompilerExtension
     public function beforeCompile(): void
     {
         Decorator::of($this->getContainerBuilder())
-          ->decorate(BaseGrid::class);
+          ->decorate(BaseGrid::class)
         	->addSetup('injectGrid')
         	->addTags(['grid']);
     }
