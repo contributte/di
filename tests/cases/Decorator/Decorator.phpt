@@ -13,9 +13,9 @@ use Tester\Assert;
 
 require_once __DIR__ . '/../../bootstrap.php';
 
-test(function (): void {
+test(static function (): void {
 	$loader = new ContainerLoader(TEMP_DIR, true);
-	$class = $loader->load(function (Compiler $compiler): void {
+	$class = $loader->load(static function (Compiler $compiler): void {
 		$extension = new class extends CompilerExtension
 		{
 
@@ -58,7 +58,7 @@ abstract class Base
 	/** @var mixed[] */
 	public $setup = [];
 
-	public function setup(InjectTester $tester, string $bar)
+	public function setup(InjectTester $tester, string $bar): void
 	{
 		$this->setup = func_get_args();
 	}
@@ -71,4 +71,6 @@ class Foo extends Base
 }
 
 class InjectTester
-{}
+{
+
+}

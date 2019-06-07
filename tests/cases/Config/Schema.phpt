@@ -13,25 +13,25 @@ use Tester\Assert;
 require_once __DIR__ . '/../../bootstrap.php';
 
 // Unknown options
-test(function (): void {
-	Assert::exception(function (): void {
+test(static function (): void {
+	Assert::exception(static function (): void {
 		Schema::root()
 			->validate(['email' => 'foo@bar.baz', 'foo' => 1]);
 	}, InvalidStateException::class, 'Unknown configuration option email, foo');
 });
 
 // String validator
-test(function (): void {
-	Assert::exception(function (): void {
+test(static function (): void {
+	Assert::exception(static function (): void {
 		Schema::root()
 			->add(Node::create('email')->isString())
 			->validate(['email' => 25]);
-	}, AssertionException::class, 'The variable "email" expects to be string, integer given.');
+	}, AssertionException::class, 'The variable "email" expects to be string, int 25 given.');
 });
 
 // Integer validator
-test(function (): void {
-	Assert::exception(function (): void {
+test(static function (): void {
+	Assert::exception(static function (): void {
 		Schema::root()
 			->add(Node::create('count')->isInt())
 			->validate(['count' => '25']);
@@ -39,63 +39,63 @@ test(function (): void {
 });
 
 // Array validator
-test(function (): void {
-	Assert::exception(function (): void {
+test(static function (): void {
+	Assert::exception(static function (): void {
 		Schema::root()
 			->add(Node::create('data')->isArray())
 			->validate(['data' => 25]);
-	}, AssertionException::class, 'The variable "data" expects to be array, integer given.');
+	}, AssertionException::class, 'The variable "data" expects to be array, int 25 given.');
 });
 
 // Float validator
-test(function (): void {
-	Assert::exception(function (): void {
+test(static function (): void {
+	Assert::exception(static function (): void {
 		Schema::root()
 			->add(Node::create('count')->isFloat())
 			->validate(['count' => 1]);
-	}, AssertionException::class, 'The variable "count" expects to be float, integer given.');
+	}, AssertionException::class, 'The variable "count" expects to be float, int 1 given.');
 });
 
 // Children validator
-test(function (): void {
-	Assert::exception(function (): void {
+test(static function (): void {
+	Assert::exception(static function (): void {
 		Schema::root()
 			->add(Node::create('students')->children([
 				Node::create('name')->isString(),
 			]))
 			->validate(['students' => 1]);
-	}, AssertionException::class, 'The variable "students" expects to be array, integer given.');
+	}, AssertionException::class, 'The variable "students" expects to be array, int 1 given.');
 
-	Assert::exception(function (): void {
+	Assert::exception(static function (): void {
 		Schema::root()
 			->add(Node::create('students')->children([
 				Node::create('name')->isString(),
 			]))
 			->validate(['students' => [['name' => 1]]]);
-	}, AssertionException::class, 'The variable "name" expects to be string, integer given.');
+	}, AssertionException::class, 'The variable "name" expects to be string, int 1 given.');
 });
 
 // Nested validator
-test(function (): void {
-	Assert::exception(function (): void {
+test(static function (): void {
+	Assert::exception(static function (): void {
 		Schema::root()
 			->add(Node::create('address')->nested([
 				Node::create('street')->isString(),
 			]))
 			->validate(['address' => 1]);
-	}, AssertionException::class, 'The variable "address" expects to be array, integer given.');
+	}, AssertionException::class, 'The variable "address" expects to be array, int 1 given.');
 
-	Assert::exception(function (): void {
+	Assert::exception(static function (): void {
 		Schema::root()
 			->add(Node::create('address')->nested([
 				Node::create('street')->isString(),
 			]))
 			->validate(['address' => ['street' => 1]]);
-	}, AssertionException::class, 'The variable "street" expects to be string, integer given.');
+	}, AssertionException::class, 'The variable "street" expects to be string, int 1 given.');
 });
 
 // Success data processing
-test(function (): void {
+test(static function (): void {
 	$data = Schema::root()
 		->add(Node::create('url1')->isString())
 		->add(Node::create('url2')->isString()->setDefault('www.foo.baz2'))
@@ -111,7 +111,7 @@ test(function (): void {
 });
 
 // Success data children processing
-test(function (): void {
+test(static function (): void {
 	$data = Schema::root()
 		->add(Node::create('students')->children([
 			Node::create('name')->isString(),
@@ -136,7 +136,7 @@ test(function (): void {
 });
 
 // Success data nested processing
-test(function (): void {
+test(static function (): void {
 	$data = Schema::root()
 		->add(Node::create('address')->nested([
 			Node::create('street')->isString(),
@@ -161,7 +161,7 @@ test(function (): void {
 });
 
 // Success data nested+children processing
-test(function (): void {
+test(static function (): void {
 	$data = Schema::root()
 		->add(Node::create('students')->children([
 			Node::create('address')->nested([

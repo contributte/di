@@ -2,6 +2,7 @@
 
 namespace Contributte\DI\Extension;
 
+use Contributte\DI\Finder;
 use Contributte\DI\IContainerAware;
 use Nette\DI\CompilerExtension;
 
@@ -15,9 +16,12 @@ class ContainerAwareExtension extends CompilerExtension
 	{
 		$builder = $this->getContainerBuilder();
 
+		$finder = new Finder($builder);
+		$definitions = $finder->getServiceDefinitionsFromAllDefinitions($builder->findByType(IContainerAware::class));
+
 		// Register as services
-		foreach ($builder->findByType(IContainerAware::class) as $service) {
-			$service->addSetup('setContainer');
+		foreach ($definitions as $definition) {
+			$definition->addSetup('setContainer');
 		}
 	}
 
