@@ -17,21 +17,23 @@ Extra contribution to [`nette/di`](https://github.com/nette/di).
 ## Documentation
 
 - [Setup](.docs/README.md#setup)
-- [ResourceExtension - autoload classes by definition](.docs/README.md#resourceextension)
-- [ContainerAware - inject container](.docs/README.md#containeraware)
-- [MutableExtension - testing extension](.docs/README.md#mutableetension)
-- [InjectValueExtension - inject parameters](.docs/README.md#injectvalueextension)
-- [PassCompilerExtension - split big extension](.docs/README.md#passcompilerextension)
-- [NewExtensionsExtension - powerful extensions](.docs/README.md#newextensionsextension)
-  - [Decorator](#decorator)
+- [ResourceExtension](.docs/README.md#resourceextension)
+  - [Resources](.docs/README.md#resources)
+  - [Performance](.docs/README.md#performance)
+- [ContainerAware](.docs/README.md#containeraware)
+- [MutableExtension](.docs/README.md#mutableextension)
+- [InjectValueExtension](.docs/README.md#injectvalueextension)
+- [PassCompilerExtension](.docs/README.md#passcompilerextension)
+- [Decorator](.docs/README.md#decorator)
 
 ## Versions
 
-| State       | Version | Branch   | PHP      |
-|-------------|---------|----------|----------|
-| dev         | `^0.4`  | `master` | `>= 7.1` |
-| stable      | `^0.3`  | `master` | `>= 7.1` |
-| stable      | `^0.2`  | `master` | `>= 5.6` |
+| State       | Version | Branch   | Nette | PHP     |
+|-------------|---------|----------|-------|---------|
+| dev         | `^0.5`  | `master` | 3.0+  | `^7.2`  |
+| stable      | `^0.4`  | `master` | 3.0+  | `^7.2`  |
+| stable      | `^0.3`  | `master` | 2.4   | `>=7.1` |
+| stable      | `^0.2`  | `master` | 2.4   | `>=5.6` |
 
 ## Maintainers
 

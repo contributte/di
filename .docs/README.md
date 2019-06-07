@@ -3,17 +3,14 @@
 ## Content
 
 - [Setup](#setup)
-- [Dependency Injection (DI)](#dependency-injection-di)
-  - [Content](#content)
-  - [ResourceExtension](#resourceextension)
-    - [Resources](#resources)
-    - [Performance](#performance)
-  - [ContainerAware](#containeraware)
-  - [MutableExtension](#mutableextension)
-  - [InjectValueExtension](#injectvalueextension)
-  - [PassCompilerExtension](#passcompilerextension)
-  - [NewExtensionsExtension](#newextensionsextension)
-  - [Decorator](#decorator)
+- [ResourceExtension](#resourceextension)
+  - [Resources](#resources)
+  - [Performance](#performance)
+- [ContainerAware](#containeraware)
+- [MutableExtension](#mutableextension)
+- [InjectValueExtension](#injectvalueextension)
+- [PassCompilerExtension](#passcompilerextension)
+- [Decorator](#decorator)
 
 ## Setup
 
@@ -54,7 +51,8 @@ autoload:
         tags: [autoload]
         setup:
           - setLogger(@customlogger)
-        autowire: false # true
+        autowired: false # true
+        inject: true # enables inject annotations and methods
 ```
 
 ### Performance
@@ -118,20 +116,26 @@ final class LoggableCachedEventDispatcher implements IContainerAware
 This extension is suitable for testing.
 
 ```php
+use Contributte\DI\Extension\MutableExtension;
+use Nette\DI\CompilerExtension;
+use Nette\DI\Compiler;
+use Nette\DI\ContainerBuilder;
+use Nette\DI\ContainerLoader;
+
 $loader = new ContainerLoader(TEMP_DIR, TRUE);
-$class = $loader->load(function (Compiler $compiler): void {
+$class = $loader->load(static function (Compiler $compiler): void {
     $compiler->addExtension('x', $mutable = new MutableExtension());
 
     // called -> loadConfiguration()
     $mutable->onLoad[] = function (CompilerExtension $ext, ContainerBuilder $builder): void {
         $builder->addDefinition($ext->prefix('request'))
-            ->setClass(Request::class)
+            ->setType(Request::class)
             ->setFactory(RequestFactory::class . '::createHttpRequest');
     };
 
     // called -> beforeCompile()
-    $mutable->onBefore[] = function (CompilerExtension $ext, ContainerBuilder $builder): void {
-        $classes = $builder->findByDefinition(Xyz::class);
+    $mutable->onBefore[] = static function (CompilerExtension $ext, ContainerBuilder $builder): void {
+        $definitions = $builder->findByType(Xyz::class);
     };
 
     ', 'neon'));
@@ -217,59 +221,6 @@ class PartAPass extends AbstractPass
     }
 
 }
-```
-
-## NewExtensionsExtension
-
-From time to time you get to the point when you have a lot of extensions. Some depend on other and vice-versa.
-Therefore the need for `NewExtensionsExtension` arises.
-
-In a classic Nette application you will see something like this:
-
-```yaml
-extensions:
-    foo: App\DI\FooExtension
-    bar: App\DI\BarExtension
-    baz1: App\DI\Baz1Extension
-    baz2: App\DI\Baz2Extension
-```
-
-The `bar` & `baz` require to have `foo` registered. How to solve this?
-
-First, you have to replace default `extensions` extension, yes, it's name is `extensions`! Change it manually
-or via the `ConfiguratorHelper` class.
-
-**Manual replacement**
-
-```php
-$configurator->defaultExtensions['extensions'] = Contributte\DI\Extension\NewExtensionsExtension::class;
-```
-
-**ConfiguratorHelper**
-
-```php
-$configurator = new Configurator();
-Contributte\DI\ConfiguratorHelper::upgrade($configurator);
-```
-
-**New-way how to register extensions**
-
-```yaml
-extensions:
-    # Register by key
-    baz1: App\DI\Baz1Extension
-
-    # Register unnamed
-    - App\DI\Baz2Extension
-
-    # Register with priority
-    bar:
-        class: App\DI\BarExtension
-        # default priority is 10, you can omit it
-        priority: 10
-    foo:
-        class: App\DI\FooExtension
-        priority: 5
 ```
 
 ## Decorator

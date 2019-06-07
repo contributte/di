@@ -2,7 +2,7 @@
 
 namespace Contributte\DI\Decorator;
 
-use Nette\DI\ServiceDefinition;
+use Nette\DI\Definitions\ServiceDefinition;
 use Nette\Utils\Arrays;
 
 final class DecorateDefinition

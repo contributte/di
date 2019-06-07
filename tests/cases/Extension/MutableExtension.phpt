@@ -14,11 +14,11 @@ use Tester\Assert;
 
 require_once __DIR__ . '/../../bootstrap.php';
 
-test(function (): void {
+test(static function (): void {
 	$loader = new ContainerLoader(TEMP_DIR, true);
-	$class = $loader->load(function (Compiler $compiler): void {
+	$class = $loader->load(static function (Compiler $compiler): void {
 		$mutable = new MutableExtension();
-		$mutable->onLoad[] = function (CompilerExtension $ext, ContainerBuilder $builder): void {
+		$mutable->onLoad[] = static function (CompilerExtension $ext, ContainerBuilder $builder): void {
 			$builder->addDefinition($ext->prefix('service'))
 				->setClass(stdClass::class);
 		};
