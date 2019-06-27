@@ -44,9 +44,12 @@ class ExtensionDefinitionsHelper
 			} elseif ($definition instanceof LocatorDefinition) {
 				$references = $definition->getReferences();
 				foreach ($references as $reference) {
-					$reference = $resolver->normalizeReference($reference); // Check that reference is valid
-					$definition = $resolver->resolveReference($reference); // Get definition by reference
-					assert($definition instanceof ServiceDefinition); // Only ServiceDefinition should be possible here
+					// Check that reference is valid
+					$reference = $resolver->normalizeReference($reference);
+					// Get definition by reference
+					$definition = $resolver->resolveReference($reference);
+					// Only ServiceDefinition should be possible here
+					assert($definition instanceof ServiceDefinition);
 					$serviceDefinitions[] = $definition;
 				}
 			} else {
@@ -72,14 +75,17 @@ class ExtensionDefinitionsHelper
 	{
 		$builder = $this->builder;
 
-		if (is_string($config) && Strings::startsWith($config, '@')) { // Definition is defined in ServicesExtension, try get it
+		// Definition is defined in ServicesExtension, try to get it
+		if (is_string($config) && Strings::startsWith($config, '@')) {
 			$definitionName = substr($config, 1);
 
-			if ($builder->hasDefinition($definitionName)) { // Definition is already loaded (beforeCompile phase), return it
+			// Definition is already loaded (beforeCompile phase), return it
+			if ($builder->hasDefinition($definitionName)) {
 				return $builder->getDefinition($definitionName);
 			}
 
-			return $config; // Definition not loaded yet (loadConfiguration phase), return reference string
+			// Definition not loaded yet (loadConfiguration phase), return reference string
+			return $config;
 		}
 
 		// Raw configuration given, create definition from it
