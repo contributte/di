@@ -3,7 +3,7 @@
 namespace Contributte\DI\Decorator;
 
 use Contributte\DI\Exception\Logical\ClassNotExistsException;
-use Contributte\DI\Finder;
+use Contributte\DI\Extension\ExtensionDefinitionsHelper;
 use Nette\DI\ContainerBuilder;
 use Nette\DI\Definitions\ServiceDefinition;
 
@@ -13,9 +13,13 @@ final class Decorator
 	/** @var ContainerBuilder */
 	private $builder;
 
+	/** @var ExtensionDefinitionsHelper */
+	private $definitionsHelper;
+
 	private function __construct(ContainerBuilder $builder)
 	{
 		$this->builder = $builder;
+		$this->definitionsHelper = new ExtensionDefinitionsHelper($builder);
 	}
 
 	public static function of(ContainerBuilder $builder): self
@@ -37,8 +41,7 @@ final class Decorator
 	 */
 	private function findByType(string $type): array
 	{
-		$finder = new Finder($this->builder);
-		$definitions = $finder->getServiceDefinitionsFromAllDefinitions($this->builder->getDefinitions());
+		$definitions = $this->definitionsHelper->getServiceDefinitionsFromAllDefinitions($this->builder->getDefinitions());
 		return array_filter($definitions, static function (ServiceDefinition $def) use ($type): bool {
 			return $def->getType() !== null && is_a($def->getType(), $type, true);
 		});

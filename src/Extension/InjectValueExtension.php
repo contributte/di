@@ -2,7 +2,6 @@
 
 namespace Contributte\DI\Extension;
 
-use Contributte\DI\Finder;
 use Nette\DI\CompilerExtension;
 use Nette\DI\Definitions\ServiceDefinition;
 use Nette\DI\Helpers;
@@ -41,8 +40,8 @@ class InjectValueExtension extends CompilerExtension
 				array_keys($this->getContainerBuilder()->findByTag(self::TAG_INJECT_VALUE))
 			);
 
-		$finder = new Finder($this->getContainerBuilder());
-		$definitions = $finder->getServiceDefinitionsFromAllDefinitions($definitions);
+		$definitionsHelper = new ExtensionDefinitionsHelper($this->getContainerBuilder());
+		$definitions = $definitionsHelper->getServiceDefinitionsFromAllDefinitions($definitions);
 
 		foreach ($definitions as $def) {
 			// Inject @value into definition
