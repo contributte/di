@@ -41,7 +41,7 @@ final class Decorator
 	 */
 	private function findByType(string $type): array
 	{
-		$definitions = $this->definitionsHelper->getServiceDefinitionsFromAllDefinitions($this->builder->getDefinitions());
+		$definitions = $this->definitionsHelper->getServiceDefinitionsFromDefinitions($this->builder->getDefinitions());
 		return array_filter($definitions, static function (ServiceDefinition $def) use ($type): bool {
 			return $def->getType() !== null && is_a($def->getType(), $type, true);
 		});
