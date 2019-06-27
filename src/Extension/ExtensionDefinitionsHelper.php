@@ -24,7 +24,7 @@ class ExtensionDefinitionsHelper
 	 * @param Definition[] $definitions
 	 * @return ServiceDefinition[]
 	 */
-	public function getServiceDefinitionsFromAllDefinitions(array $definitions): array
+	public function getServiceDefinitionsFromDefinitions(array $definitions): array
 	{
 		$serviceDefinitions = [];
 		$resolver = new Resolver($this->builder);

@@ -41,7 +41,7 @@ class InjectValueExtension extends CompilerExtension
 			);
 
 		$definitionsHelper = new ExtensionDefinitionsHelper($this->getContainerBuilder());
-		$definitions = $definitionsHelper->getServiceDefinitionsFromAllDefinitions($definitions);
+		$definitions = $definitionsHelper->getServiceDefinitionsFromDefinitions($definitions);
 
 		foreach ($definitions as $def) {
 			// Inject @value into definition
