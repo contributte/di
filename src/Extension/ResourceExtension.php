@@ -30,8 +30,8 @@ class ResourceExtension extends CompilerExtension
 					'excludes' => Expect::arrayOf('string'),
 					'decorator' => Expect::structure([
 						'tags' => Expect::array(),
-						'setup' => Expect::array(),
-						'autowired' => Expect::bool()->nullable(),
+						'setup' => Expect::listOf('callable|Nette\DI\Definitions\Statement|array:1'),
+						'autowired' => Expect::type('bool|string|array')->nullable(),
 						'inject' => Expect::bool()->nullable(),
 					]),
 				])
