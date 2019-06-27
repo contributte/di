@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace Contributte\DI;
+namespace Contributte\DI\Extension;
 
 use Nette\DI\ContainerBuilder;
 use Nette\DI\Definitions\Definition;
@@ -9,7 +9,7 @@ use Nette\DI\Definitions\LocatorDefinition;
 use Nette\DI\Definitions\ServiceDefinition;
 use Nette\DI\Resolver;
 
-class Finder
+class ExtensionDefinitionsHelper
 {
 
 	/** @var ContainerBuilder */
