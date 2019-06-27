@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace Contributte\DI\Extension;
+namespace Contributte\DI\Helper;
 
 use Nette\DI\Compiler;
 use Nette\DI\ContainerBuilder;

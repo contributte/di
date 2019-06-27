@@ -2,6 +2,7 @@
 
 namespace Contributte\DI\Extension;
 
+use Contributte\DI\Helper\ExtensionDefinitionsHelper;
 use Nette\DI\CompilerExtension;
 use Nette\DI\Definitions\ServiceDefinition;
 use Nette\DI\Helpers;
