@@ -5,7 +5,7 @@
  */
 
 use Contributte\DI\Decorator\Decorator;
-use Contributte\DI\Extension\ExtensionDefinitionsHelper;
+use Contributte\DI\Helper\ExtensionDefinitionsHelper;
 use Nette\DI\Compiler;
 use Nette\DI\CompilerExtension;
 use Nette\DI\Container;

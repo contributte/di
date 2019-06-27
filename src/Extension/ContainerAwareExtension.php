@@ -2,6 +2,7 @@
 
 namespace Contributte\DI\Extension;
 
+use Contributte\DI\Helper\ExtensionDefinitionsHelper;
 use Contributte\DI\IContainerAware;
 use Nette\DI\CompilerExtension;
 

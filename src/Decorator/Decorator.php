@@ -3,7 +3,7 @@
 namespace Contributte\DI\Decorator;
 
 use Contributte\DI\Exception\Logical\ClassNotExistsException;
-use Contributte\DI\Extension\ExtensionDefinitionsHelper;
+use Contributte\DI\Helper\ExtensionDefinitionsHelper;
 use Nette\DI\ContainerBuilder;
 use Nette\DI\Definitions\ServiceDefinition;
 
