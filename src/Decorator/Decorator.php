@@ -16,15 +16,15 @@ final class Decorator
 	/** @var ExtensionDefinitionsHelper */
 	private $definitionsHelper;
 
-	private function __construct(ContainerBuilder $builder)
+	private function __construct(ContainerBuilder $builder, ExtensionDefinitionsHelper $definitionsHelper)
 	{
 		$this->builder = $builder;
-		$this->definitionsHelper = new ExtensionDefinitionsHelper($builder);
+		$this->definitionsHelper = $definitionsHelper;
 	}
 
-	public static function of(ContainerBuilder $builder): self
+	public static function of(ContainerBuilder $builder, ExtensionDefinitionsHelper $definitionsHelper): self
 	{
-		return new self($builder);
+		return new self($builder, $definitionsHelper);
 	}
 
 	public function decorate(string $type): DecorateDefinition

@@ -15,7 +15,7 @@ class ContainerAwareExtension extends CompilerExtension
 	{
 		$builder = $this->getContainerBuilder();
 
-		$definitionsHelper = new ExtensionDefinitionsHelper($builder);
+		$definitionsHelper = new ExtensionDefinitionsHelper($builder, $this->compiler);
 		$definitions = $definitionsHelper->getServiceDefinitionsFromDefinitions($builder->findByType(IContainerAware::class));
 
 		// Register as services

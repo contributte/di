@@ -5,6 +5,7 @@
  */
 
 use Contributte\DI\Decorator\Decorator;
+use Contributte\DI\Extension\ExtensionDefinitionsHelper;
 use Nette\DI\Compiler;
 use Nette\DI\CompilerExtension;
 use Nette\DI\Container;
@@ -34,7 +35,7 @@ test(static function (): void {
 			{
 				$builder = $this->getContainerBuilder();
 
-				$decorator = Decorator::of($builder);
+				$decorator = Decorator::of($builder, new ExtensionDefinitionsHelper($builder, $this->compiler));
 				$decorator->decorate(Base::class)
 					->addSetup('setup', [
 						'bar' => 'foo',

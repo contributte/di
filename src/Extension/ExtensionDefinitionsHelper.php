@@ -2,12 +2,15 @@
 
 namespace Contributte\DI\Extension;
 
+use Nette\DI\Compiler;
 use Nette\DI\ContainerBuilder;
 use Nette\DI\Definitions\Definition;
 use Nette\DI\Definitions\FactoryDefinition;
 use Nette\DI\Definitions\LocatorDefinition;
 use Nette\DI\Definitions\ServiceDefinition;
+use Nette\DI\Definitions\Statement;
 use Nette\DI\Resolver;
+use Nette\Utils\Strings;
 
 class ExtensionDefinitionsHelper
 {
@@ -15,9 +18,13 @@ class ExtensionDefinitionsHelper
 	/** @var ContainerBuilder */
 	private $builder;
 
-	public function __construct(ContainerBuilder $containerBuilder)
+	/** @var Compiler */
+	private $compiler;
+
+	public function __construct(ContainerBuilder $containerBuilder, Compiler $compiler)
 	{
 		$this->builder = $containerBuilder;
+		$this->compiler = $compiler;
 	}
 
 	/**
@@ -55,6 +62,29 @@ class ExtensionDefinitionsHelper
 		$serviceDefinitions = array_unique($serviceDefinitions, SORT_REGULAR);
 
 		return $serviceDefinitions;
+	}
+
+	/**
+	 * @param string|mixed[]|Statement $config
+	 * @return Definition|string
+	 */
+	public function getDefinitionFromConfig($config, string $preferredPrefix)
+	{
+		$builder = $this->builder;
+
+		if (is_string($config) && Strings::startsWith($config, '@')) { // Definition is defined in ServicesExtension, try get it
+			$definitionName = substr($config, 1);
+
+			if ($builder->hasDefinition($definitionName)) { // Definition is already loaded (beforeCompile phase), return it
+				return $builder->getDefinition($definitionName);
+			}
+
+			return $config; // Definition not loaded yet (loadConfiguration phase), return reference string
+		}
+
+		// Raw configuration given, create definition from it
+		$this->compiler->loadDefinitionsFromConfig([$preferredPrefix => $config]);
+		return $builder->getDefinition($preferredPrefix);
 	}
 
 }

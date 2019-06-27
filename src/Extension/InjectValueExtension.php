@@ -31,16 +31,17 @@ class InjectValueExtension extends CompilerExtension
 	 */
 	public function beforeCompile(): void
 	{
+		$builder = $this->getContainerBuilder();
 		$config = $this->config;
 
 		$definitions = $config->all
-			? $this->getContainerBuilder()->getDefinitions()
+			? $builder->getDefinitions()
 			: array_map(
-				[$this->getContainerBuilder(), 'getDefinition'],
-				array_keys($this->getContainerBuilder()->findByTag(self::TAG_INJECT_VALUE))
+				[$builder, 'getDefinition'],
+				array_keys($builder->findByTag(self::TAG_INJECT_VALUE))
 			);
 
-		$definitionsHelper = new ExtensionDefinitionsHelper($this->getContainerBuilder());
+		$definitionsHelper = new ExtensionDefinitionsHelper($builder, $this->compiler);
 		$definitions = $definitionsHelper->getServiceDefinitionsFromDefinitions($definitions);
 
 		foreach ($definitions as $def) {
