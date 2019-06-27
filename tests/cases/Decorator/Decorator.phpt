@@ -35,7 +35,7 @@ test(static function (): void {
 			{
 				$builder = $this->getContainerBuilder();
 
-				$decorator = Decorator::of($builder, new ExtensionDefinitionsHelper($builder, $this->compiler));
+				$decorator = Decorator::of($builder, new ExtensionDefinitionsHelper($this->compiler));
 				$decorator->decorate(Base::class)
 					->addSetup('setup', [
 						'bar' => 'foo',

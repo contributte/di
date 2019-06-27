@@ -3,7 +3,6 @@
 namespace Contributte\DI\Helper;
 
 use Nette\DI\Compiler;
-use Nette\DI\ContainerBuilder;
 use Nette\DI\Definitions\Definition;
 use Nette\DI\Definitions\FactoryDefinition;
 use Nette\DI\Definitions\LocatorDefinition;
@@ -15,15 +14,11 @@ use Nette\Utils\Strings;
 class ExtensionDefinitionsHelper
 {
 
-	/** @var ContainerBuilder */
-	private $builder;
-
 	/** @var Compiler */
 	private $compiler;
 
-	public function __construct(ContainerBuilder $containerBuilder, Compiler $compiler)
+	public function __construct(Compiler $compiler)
 	{
-		$this->builder = $containerBuilder;
 		$this->compiler = $compiler;
 	}
 
@@ -34,7 +29,7 @@ class ExtensionDefinitionsHelper
 	public function getServiceDefinitionsFromDefinitions(array $definitions): array
 	{
 		$serviceDefinitions = [];
-		$resolver = new Resolver($this->builder);
+		$resolver = new Resolver($this->compiler->getContainerBuilder());
 
 		foreach ($definitions as $definition) {
 			if ($definition instanceof ServiceDefinition) {
@@ -73,7 +68,7 @@ class ExtensionDefinitionsHelper
 	 */
 	public function getDefinitionFromConfig($config, string $preferredPrefix)
 	{
-		$builder = $this->builder;
+		$builder = $this->compiler->getContainerBuilder();
 
 		// Definition is defined in ServicesExtension, try to get it
 		if (is_string($config) && Strings::startsWith($config, '@')) {

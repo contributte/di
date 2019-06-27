@@ -42,7 +42,7 @@ class InjectValueExtension extends CompilerExtension
 				array_keys($builder->findByTag(self::TAG_INJECT_VALUE))
 			);
 
-		$definitionsHelper = new ExtensionDefinitionsHelper($builder, $this->compiler);
+		$definitionsHelper = new ExtensionDefinitionsHelper($this->compiler);
 		$definitions = $definitionsHelper->getServiceDefinitionsFromDefinitions($definitions);
 
 		foreach ($definitions as $def) {
