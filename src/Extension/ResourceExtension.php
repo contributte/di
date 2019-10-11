@@ -80,6 +80,7 @@ class ResourceExtension extends CompilerExtension
 							$key = is_int($key) ? (string) $key : $key;
 							$setup = new Statement($key, array_values($setup));
 						}
+
 						$def->addSetup($setup);
 					}
 				}
