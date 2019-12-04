@@ -88,4 +88,24 @@ class ExtensionDefinitionsHelper
 		return $builder->getDefinition($preferredPrefix);
 	}
 
+	/**
+	 * Check if config is valid callable or callable syntax which may result in valid callable at runtime and returns an definition otherwise
+	 *
+	 * @param string|mixed[]|Statement $config
+	 * @return mixed
+	 */
+	public function getCallableFromConfig($config, string $preferredPrefix)
+	{
+		if (is_callable($config)) {
+			return $config;
+		}
+
+		// Might be valid callable at runtime
+		if (is_array($config) && is_callable($config, true) && Strings::startsWith($config[0], '@')) {
+			return $config;
+		}
+
+		return $this->getDefinitionFromConfig($config, $preferredPrefix);
+	}
+
 }
