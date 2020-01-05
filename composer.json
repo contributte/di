@@ -17,13 +17,13 @@
   ],
   "require": {
     "php": "^7.2",
-    "nette/di": "~3.0.0",
-    "nette/utils": "~3.0.1"
+    "nette/di": "~3.0.2",
+    "nette/utils": "~3.0.3|~3.1.0"
   },
   "require-dev": {
     "ninjify/qa": "^0.10.0",
     "ninjify/nunjuck": "^0.3.0",
-    "nette/robot-loader": "~3.0.4|~3.1.0|~3.2.0",
+    "nette/robot-loader": "~3.0.4|~3.1.0|~3.2.1",
     "nette/bootstrap": "~3.0.0",
     "phpstan/extension-installer": "^1.0",
     "phpstan/phpstan-deprecation-rules": "^0.11",
