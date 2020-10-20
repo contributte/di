@@ -21,7 +21,7 @@
     "nette/utils": "^3.0.3"
   },
   "require-dev": {
-    "ninjify/qa": "^0.10.0",
+    "ninjify/qa": "^0.12.0",
     "ninjify/nunjuck": "^0.3.0",
     "nette/robot-loader": "^3.0.4",
     "nette/bootstrap": "~3.0.0",
