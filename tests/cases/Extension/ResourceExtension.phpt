@@ -106,7 +106,7 @@ test(static function (): void {
 	Assert::type('object', $container->getByType(BazService::class));
 	Assert::throws(static function () use ($container): void {
 		$container->getByType(NestedBazService::class);
-	}, MissingServiceException::class, sprintf('Service of type %s not found.', NestedBazService::class));
+	}, MissingServiceException::class, sprintf('Service of type %s not found. Did you add it to configuration file?', NestedBazService::class));
 });
 
 // Invalid resource - must end with /
@@ -147,10 +147,10 @@ test(static function (): void {
 
 	Assert::throws(static function () use ($container): void {
 		$container->getByType(BazService::class);
-	}, MissingServiceException::class, sprintf('Service of type %s not found.', BazService::class));
+	}, MissingServiceException::class, sprintf('Service of type %s not found. Did you add it to configuration file?', BazService::class));
 	Assert::throws(static function () use ($container): void {
 		$container->getByType(NestedBazService::class);
-	}, MissingServiceException::class, sprintf('Service of type %s not found.', NestedBazService::class));
+	}, MissingServiceException::class, sprintf('Service of type %s not found. Did you add it to configuration file?', NestedBazService::class));
 });
 
 // Decorate services - add tags
@@ -184,7 +184,7 @@ test(static function (): void {
 		$compiler->loadConfig(FileMock::create('
 		services:
 			- stdClass
-		
+
 		autoload:
 			resources:
 				Tests\Fixtures\Bar\:
