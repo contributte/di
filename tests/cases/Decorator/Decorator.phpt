@@ -11,6 +11,9 @@ use Nette\DI\CompilerExtension;
 use Nette\DI\Container;
 use Nette\DI\ContainerLoader;
 use Tester\Assert;
+use Tests\Fixtures\Inject\Base;
+use Tests\Fixtures\Inject\Child;
+use Tests\Fixtures\Inject\Tester;
 
 require_once __DIR__ . '/../../bootstrap.php';
 
@@ -24,11 +27,11 @@ test(static function (): void {
 			{
 				$builder = $this->getContainerBuilder();
 
-				$builder->addDefinition($this->prefix('foo'))
-					->setType(Foo::class);
+				$builder->addDefinition($this->prefix('child'))
+					->setType(Child::class);
 
 				$builder->addDefinition($this->prefix('inject'))
-					->setType(InjectTester::class);
+					->setType(Tester::class);
 			}
 
 			public function beforeCompile(): void
@@ -48,30 +51,7 @@ test(static function (): void {
 	}, 1);
 	/** @var Container $container */
 	$container = new $class();
-	Assert::notEqual(new Foo(), $container->getService('x.foo'));
-	Assert::equal([new InjectTester(), 'foo'], $container->getService('x.foo')->setup);
-	Assert::equal(['x.foo' => true], $container->findByTag('tag'));
+	Assert::notEqual(new Child(), $container->getService('x.child'));
+	Assert::equal([new Tester(), 'foo'], $container->getService('x.child')->setup);
+	Assert::equal(['x.child' => true], $container->findByTag('tag'));
 });
-
-abstract class Base
-{
-
-	/** @var mixed[] */
-	public $setup = [];
-
-	public function setup(InjectTester $tester, string $bar): void
-	{
-		$this->setup = func_get_args();
-	}
-
-}
-
-class Foo extends Base
-{
-
-}
-
-class InjectTester
-{
-
-}
