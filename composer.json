@@ -22,7 +22,7 @@
   },
   "require-dev": {
     "ninjify/qa": "^0.12.0",
-    "ninjify/nunjuck": "^0.3.0",
+    "ninjify/nunjuck": "^0.4.0",
     "nette/robot-loader": "^3.0.4",
     "nette/bootstrap": "~3.0.0",
     "phpstan/extension-installer": "^1.0",
