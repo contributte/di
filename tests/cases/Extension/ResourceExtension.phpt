@@ -122,8 +122,7 @@ test(static function (): void {
 		', 'neon'));
 		}, 5);
 
-		/** @var Container $container */
-		$container = new $class();
+		new $class();
 	}, RuntimeException::class, 'Resource "Tests\Fixtures\Baz" must end with /');
 });
 

@@ -77,7 +77,7 @@ class InjectValueExtension extends CompilerExtension
 			}
 
 			// Hooray, we have a match!
-			[$doc, $content] = $match;
+			[,$content] = $match;
 
 			// Expand content of @value and setup to definition
 			$def->addSetup('$' . $name, [$this->expand($content)]);
