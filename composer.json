@@ -21,18 +21,18 @@
     "nette/utils": "^3.0.3"
   },
   "require-dev": {
-    "ninjify/qa": "^0.12.0",
-    "ninjify/nunjuck": "^0.4.0",
+    "ninjify/qa": "^0.12",
+    "ninjify/nunjuck": "^0.4",
     "nette/robot-loader": "^3.0.4",
     "nette/bootstrap": "~3.0.0",
-    "phpstan/extension-installer": "^1.0",
     "phpstan/phpstan": "^0.12",
     "phpstan/phpstan-deprecation-rules": "^0.12",
     "phpstan/phpstan-nette": "^0.12",
     "phpstan/phpstan-strict-rules": "^0.12"
   },
   "conflict": {
-    "nette/di": "<3.0.0"
+    "nette/di": "<3.0.0",
+    "nette/schema": "<1.1.0"
   },
   "suggest": {
     "nette/robot-loader": "to use AutoloadExtension[CompilerExtension]",
