@@ -4,8 +4,8 @@
 
 - [Setup](#setup)
 - [ResourceExtension](#resourceextension)
-  - [Resources](#resources)
-  - [Performance](#performance)
+	- [Resources](#resources)
+	- [Performance](#performance)
 - [ContainerAware](#containeraware)
 - [MutableExtension](#mutableextension)
 - [InjectValueExtension](#injectvalueextension)
@@ -22,18 +22,18 @@ composer require contributte/di
 
 First, you have to register the extension.
 
-```yaml
+```neon
 extensions:
-    autoload: Contributte\DI\Extension\ResourceExtension
+	autoload: Contributte\DI\Extension\ResourceExtension
 ```
 
 Second, define some resources.
 
-```yaml
+```neon
 autoload:
-    resources:
-        App\Model\Services\:
-            paths: [%appDir%/model/services]
+	resources:
+		App\Model\Services\:
+			paths: [%appDir%/model/services]
 ```
 
 > It may look familiar to you. You're right, the idea comes from [Symfony 3.3](http://symfony.com/doc/current/service_container/3.3-di-changes.html#the-new-default-services-yml-file).
@@ -42,17 +42,17 @@ That's all, the `ResourceExtension` will try to register all non-abstract instan
 
 ### Resources
 
-```yaml
+```neon
 autoload:
-    App\Model\Services\:
-      paths: [%appDir%/model/services]
-      excludes: [App\Model\Services\Gopay, App\Model\Services\CustomService\Testing]
-      decorator:
-        tags: [autoload]
-        setup:
-          - setLogger(@customlogger)
-        autowired: false # true
-        inject: true # enables inject annotations and methods
+	App\Model\Services\:
+		paths: [%appDir%/model/services]
+		excludes: [App\Model\Services\Gopay, App\Model\Services\CustomService\Testing]
+		decorator:
+			tags: [autoload]
+			setup:
+				- setLogger(@customlogger)
+			autowired: false # true
+			inject: true # enables inject annotations and methods
 ```
 
 ### Performance
@@ -64,9 +64,9 @@ almost as [official registering of presenters as services](https://api.nette.org
 
 This package provides the missing `IContainerAware` interface for your applications.
 
-```yaml
+```neon
 extensions:
-    aware: Contributte\DI\Extension\ContainerAwareExtension
+	aware: Contributte\DI\Extension\ContainerAwareExtension
 ```
 
 From that moment you can use the `IContainerAware` interface and let the container inject.
@@ -82,13 +82,13 @@ use Nette\DI\Container;
 final class LoggableCachedEventDispatcher implements IContainerAware
 {
 
-    /** @var Container */
-    protected $container;
+	/** @var Container */
+	protected $container;
 
-    public function setContainer(Container $container): void
-    {
-        $this->container = $container;
-    }
+	public function setContainer(Container $container): void
+	{
+		$this->container = $container;
+	}
 
 }
 ```
@@ -106,7 +106,7 @@ use Contributte\DI\TContainerAware;
 final class LoggableCachedEventDispatcher implements IContainerAware
 {
 
-    use TContainerAware;
+	use TContainerAware;
 
 }
 ```
@@ -124,21 +124,21 @@ use Nette\DI\ContainerLoader;
 
 $loader = new ContainerLoader(TEMP_DIR, TRUE);
 $class = $loader->load(static function (Compiler $compiler): void {
-    $compiler->addExtension('x', $mutable = new MutableExtension());
+	$compiler->addExtension('x', $mutable = new MutableExtension());
 
-    // called -> loadConfiguration()
-    $mutable->onLoad[] = function (CompilerExtension $ext, ContainerBuilder $builder): void {
-        $builder->addDefinition($ext->prefix('request'))
-            ->setType(Request::class)
-            ->setFactory(RequestFactory::class . '::createHttpRequest');
-    };
+	// called -> loadConfiguration()
+	$mutable->onLoad[] = function (CompilerExtension $ext, ContainerBuilder $builder): void {
+		$builder->addDefinition($ext->prefix('request'))
+			->setType(Request::class)
+			->setFactory(RequestFactory::class . '::createHttpRequest');
+	};
 
-    // called -> beforeCompile()
-    $mutable->onBefore[] = static function (CompilerExtension $ext, ContainerBuilder $builder): void {
-        $definitions = $builder->findByType(Xyz::class);
-    };
+	// called -> beforeCompile()
+	$mutable->onBefore[] = static function (CompilerExtension $ext, ContainerBuilder $builder): void {
+		$definitions = $builder->findByType(Xyz::class);
+	};
 
-    ', 'neon'));
+	', 'neon'));
 }, time());
 ```
 
@@ -152,33 +152,33 @@ Let's say we have a service like this:
 class FooPresenter extends Presenter
 {
 
-    /** @var string @value(%appDir%/baz) */
-    public $bar;
+	/** @var string @value(%appDir%/baz) */
+	public $bar;
 
 }
 ```
 
 First, register `InjectValueExtension` under `extensions` key.
 
-```yaml
+```neon
 extensions:
-    injectValue: Contributte\DI\Extension\InjectValueExtension
+	injectValue: Contributte\DI\Extension\InjectValueExtension
 
 injectValue:
-    all: on/off
+	all: on/off
 ```
 
 By default, the extension `injects values` only for services having the `inject.value` tag.
 You can override it to inject to all services by defining `all: on`. Or follow the preferred way
 and use the Nette\DI decorator.
 
-```yaml
+```neon
 decorator:
-    App\MyBaseService:
-      tags: [inject.value]
+	App\MyBaseService:
+		tags: [inject.value]
 
-    App\MyBasePresenter:
-      tags: [inject.value]
+	App\MyBasePresenter:
+		tags: [inject.value]
 ```
 
 In the end, after creating the `FooPresenter`, the `$bar` property will be filled with `<path>/www/baz`. Cool right?
@@ -193,11 +193,11 @@ use Contributte\DI\Extension\PassCompilerExtension;
 final class FoobarExtension extends PassCompilerExtension
 {
 
-    public function __construct()
-    {
-        $this->addPass(new PartAPass($this));
-        $this->addPass(new PartBPass($this));
-    }
+	public function __construct()
+	{
+		$this->addPass(new PartAPass($this));
+		$this->addPass(new PartBPass($this));
+	}
 
 }
 ```
@@ -214,11 +214,11 @@ use Contributte\DI\Pass\AbstractPass;
 class PartAPass extends AbstractPass
 {
 
-    public function loadPassConfiguration(): void
-    {
-        $builder = $this->extension->getCompilerBuilder();
-        // ...
-    }
+	public function loadPassConfiguration(): void
+	{
+		$builder = $this->extension->getCompilerBuilder();
+		// ...
+	}
 
 }
 ```
@@ -234,13 +234,13 @@ use Nette\DI\CompilerExtension;
 final class FooExtension extends CompilerExtension
 {
 
-    public function beforeCompile(): void
-    {
-        Decorator::of($this->getContainerBuilder())
-          ->decorate(BaseGrid::class)
-        	->addSetup('injectGrid')
-        	->addTags(['grid']);
-    }
+	public function beforeCompile(): void
+	{
+		Decorator::of($this->getContainerBuilder())
+		  ->decorate(BaseGrid::class)
+			->addSetup('injectGrid')
+			->addTags(['grid']);
+	}
 
 }
 ```
