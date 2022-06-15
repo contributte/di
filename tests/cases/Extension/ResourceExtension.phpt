@@ -9,6 +9,7 @@ use Nette\DI\Compiler;
 use Nette\DI\Container;
 use Nette\DI\ContainerLoader;
 use Nette\DI\MissingServiceException;
+use Nette\DI\ServiceCreationException;
 use Tester\Assert;
 use Tester\FileMock;
 use Tests\Fixtures\Bar\BarService;
@@ -16,6 +17,7 @@ use Tests\Fixtures\Baz\BazService;
 use Tests\Fixtures\Baz\Nested\NestedBazService;
 use Tests\Fixtures\Foo\FooBarService;
 use Tests\Fixtures\Foo\FooService;
+use Tests\Fixtures\Scalar\ScalarService;
 
 require_once __DIR__ . '/../../bootstrap.php';
 
@@ -220,4 +222,46 @@ test(static function (): void {
 	$container = new $class();
 
 	Assert::null($container->getByType(BarService::class, false));
+});
+
+// Register services manually
+test(static function (): void {
+	$loader = new ContainerLoader(TEMP_DIR, true);
+	$class = $loader->load(static function (Compiler $compiler): void {
+		$compiler->addExtension('autoload', new ResourceExtension());
+		$compiler->addConfig(['parameters' => ['appDir' => TESTER_DIR]]);
+		$compiler->loadConfig(FileMock::create('
+		services:
+			scalar: Tests\Fixtures\Scalar\ScalarService("foobar")
+		autoload:
+			resources:
+				Tests\Fixtures\Scalar\:
+					paths: [%appDir%/fixtures/Scalar]
+		', 'neon'));
+	}, 11);
+
+	/** @var Container $container */
+	$container = new $class();
+
+	/** @var ScalarService $service */
+	$service = $container->getService('scalar');
+
+	Assert::equal('foobar', $service->text);
+});
+
+// Register services manually (exception)
+test(static function (): void {
+	Assert::exception(function (): void {
+		$loader = new ContainerLoader(TEMP_DIR, true);
+		$loader->load(static function (Compiler $compiler): void {
+			$compiler->addExtension('autoload', new ResourceExtension());
+			$compiler->addConfig(['parameters' => ['appDir' => TESTER_DIR]]);
+			$compiler->loadConfig(FileMock::create('
+		autoload:
+			resources:
+				Tests\Fixtures\Scalar\:
+					paths: [%appDir%/fixtures/Scalar]
+		', 'neon'));
+		}, 12);
+	}, ServiceCreationException::class, "Service 'autoload._Tests_Fixtures_Scalar_.2' (type of Tests\Fixtures\Scalar\ScalarService): Parameter \$text in __construct() has no class type hint or default value, so its value must be specified.");
 });

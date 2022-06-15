@@ -21,6 +21,9 @@ use stdClass;
 class ResourceExtension extends CompilerExtension
 {
 
+	/** @var array<int, array{namespace: string, resource: stdClass, classes: string[]}>  */
+	private array $map = [];
+
 	public function getConfigSchema(): Schema
 	{
 		return Expect::structure([
@@ -39,12 +42,8 @@ class ResourceExtension extends CompilerExtension
 		]);
 	}
 
-	/**
-	 * Register services
-	 */
 	public function loadConfiguration(): void
 	{
-		$builder = $this->getContainerBuilder();
 		$config = $this->config;
 
 		foreach ($config->resources as $namespace => $resource) {
@@ -54,6 +53,24 @@ class ResourceExtension extends CompilerExtension
 
 			// Find classes of given resource
 			$classes = $this->findClasses($namespace, $resource->paths, $resource->excludes);
+
+			// Store found classes
+			$this->map[] = [
+				'namespace' => $namespace,
+				'resource' => $resource,
+				'classes' => $classes
+			];
+		}
+	}
+
+	public function beforeCompile(): void
+	{
+		$builder = $this->getContainerBuilder();
+
+		foreach ($this->map as $config) {
+			$classes = $config['classes'];
+			$resource = $config['resource'];
+			$namespace = $config['namespace'];
 
 			// Register services of given resource
 			$counter = 1;
@@ -120,7 +137,7 @@ class ResourceExtension extends CompilerExtension
 			// Excluded namespace
 			if (array_filter($excludes, static function (string $exclude) use ($class): bool {
 					return Strings::startsWith($class, $exclude);
-			}) !== []) {
+				}) !== []) {
 				continue;
 			}
 
