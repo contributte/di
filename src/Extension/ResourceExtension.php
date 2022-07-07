@@ -22,7 +22,7 @@ class ResourceExtension extends CompilerExtension
 {
 
 	/** @var array<int, array{namespace: string, resource: stdClass, classes: string[]}>  */
-	private array $map = [];
+	private $map = [];
 
 	public function getConfigSchema(): Schema
 	{
