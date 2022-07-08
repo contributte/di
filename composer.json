@@ -25,10 +25,10 @@
     "ninjify/nunjuck": "^0.4",
     "nette/robot-loader": "^3.0.4",
     "nette/bootstrap": "~3.0.0",
-    "phpstan/phpstan": "^0.12",
-    "phpstan/phpstan-deprecation-rules": "^0.12",
-    "phpstan/phpstan-nette": "^0.12",
-    "phpstan/phpstan-strict-rules": "^0.12"
+    "phpstan/phpstan": "^1.8.0",
+    "phpstan/phpstan-deprecation-rules": "^1.0.0",
+    "phpstan/phpstan-nette": "^1.0.0",
+    "phpstan/phpstan-strict-rules": "^1.0.0"
   },
   "conflict": {
     "nette/di": "<3.0.0",
