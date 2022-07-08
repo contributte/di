@@ -5,9 +5,13 @@ namespace Tests\Fixtures\Scalar;
 final class ScalarService
 {
 
-	public string $text;
+	/** @var string */
+	public $text;
 
-	public function __construct(string $text)
+	/**
+	 * @param string $text
+	 */
+	public function __construct($text)
 	{
 		$this->text = $text;
 	}
