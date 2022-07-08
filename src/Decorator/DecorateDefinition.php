@@ -2,7 +2,10 @@
 
 namespace Contributte\DI\Decorator;
 
+use Nette\DI\Definitions\Definition;
+use Nette\DI\Definitions\Reference;
 use Nette\DI\Definitions\ServiceDefinition;
+use Nette\DI\Definitions\Statement;
 use Nette\Utils\Arrays;
 
 final class DecorateDefinition
@@ -20,7 +23,7 @@ final class DecorateDefinition
 	}
 
 	/**
-	 * @param mixed $entity
+	 * @param string|mixed[]|Definition|Reference|Statement $entity
 	 * @param mixed[] $args
 	 */
 	public function addSetup($entity, array $args = []): self
