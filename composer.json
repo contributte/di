@@ -24,7 +24,7 @@
     "ninjify/qa": "^0.12",
     "ninjify/nunjuck": "^0.4",
     "nette/robot-loader": "^3.0.4",
-    "nette/bootstrap": "~3.0.0",
+    "nette/bootstrap": "^3.0.0",
     "phpstan/phpstan": "^1.8.0",
     "phpstan/phpstan-deprecation-rules": "^1.0.0",
     "phpstan/phpstan-nette": "^1.0.0",
