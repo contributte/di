@@ -40,6 +40,8 @@ autoload:
 
 That's all, the `ResourceExtension` will try to register all non-abstract instantiable classes to the container.
 
+‼️ ResourceExtension should be the first extension in your `extensions` list.
+
 ### Resources
 
 ```neon
