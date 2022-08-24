@@ -8,6 +8,7 @@ use Contributte\DI\Extension\ResourceExtension;
 use Nette\DI\Compiler;
 use Nette\DI\Container;
 use Nette\DI\ContainerLoader;
+use Nette\DI\Extensions\InjectExtension;
 use Nette\DI\MissingServiceException;
 use Nette\DI\ServiceCreationException;
 use Tester\Assert;
@@ -15,6 +16,7 @@ use Tester\FileMock;
 use Tests\Fixtures\Bar\BarService;
 use Tests\Fixtures\Baz\BazService;
 use Tests\Fixtures\Baz\Nested\NestedBazService;
+use Tests\Fixtures\Decorator\InjectService;
 use Tests\Fixtures\Foo\FooBarService;
 use Tests\Fixtures\Foo\FooService;
 use Tests\Fixtures\Scalar\ScalarService;
@@ -264,4 +266,30 @@ test(static function (): void {
 		', 'neon'));
 		}, 12);
 	}, ServiceCreationException::class, "Service 'autoload._Tests_Fixtures_Scalar_.2' (type of Tests\Fixtures\Scalar\ScalarService): Parameter \$text in ScalarService::__construct() has no class type or default value, so its value must be specified.");
+});
+
+// Register services manually (exception)
+test(static function (): void {
+	$loader = new ContainerLoader(TEMP_DIR, true);
+	$class = $loader->load(static function (Compiler $compiler): void {
+		$compiler->addExtension('autoload', new ResourceExtension());
+		$compiler->addExtension('inject', new InjectExtension());
+		$compiler->addConfig(['parameters' => ['appDir' => TESTER_DIR]]);
+		$compiler->loadConfig(FileMock::create('
+		autoload:
+			resources:
+				Tests\Fixtures\Decorator\:
+					paths: [%appDir%/fixtures/Decorator]
+					decorator:
+						inject: true
+		', 'neon'));
+	}, 13);
+
+	/** @var Container $container */
+	$container = new $class();
+
+	/** @var InjectService $service */
+	$service = $container->getByType(InjectService::class);
+
+	Assert::notNull($service->authenticator);
 });

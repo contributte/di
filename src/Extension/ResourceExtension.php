@@ -82,7 +82,8 @@ class ResourceExtension extends CompilerExtension
 				}
 
 				$def = $builder->addDefinition($this->prefix($name . '.' . $counter++))
-					->setFactory($class);
+					->setFactory($class)
+					->setType($class);
 
 				$decorator = $resource->decorator;
 
