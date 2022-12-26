@@ -34,10 +34,6 @@
     "nette/di": "<3.0.0",
     "nette/schema": "<1.1.0"
   },
-  "suggest": {
-    "nette/robot-loader": "to use AutoloadExtension[CompilerExtension]",
-    "nette/reflection": "to use AutoloadExtension[CompilerExtension]"
-  },
   "autoload": {
     "psr-4": {
       "Contributte\\DI\\": "src"
