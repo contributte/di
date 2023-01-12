@@ -36,8 +36,6 @@ For details on how to use this package, check out our [documentation](.docs).
 |-------------|---------|----------|-------|---------|
 | dev         | `^0.6`  | `master` | 3.0+  | `>=7.2` |
 | stable      | `^0.5`  | `master` | 3.0+  | `>=7.2` |
-| stable      | `^0.3`  | `master` | 2.4   | `>=7.1` |
-| stable      | `^0.2`  | `master` | 2.4   | `>=5.6` |
 
 ## Development
 
