@@ -7,8 +7,13 @@ includes:
 parameters:
 	level: 9
 
+	scanDirectories:
+		- src
+
+	fileExtensions:
+		- php
+
 	paths:
 		- src
 
 	ignoreErrors:
-		- '#^Parameter \#1 \$subject of static method Nette\\Utils\\Strings\:\:match\(\) expects string, string\|false given\.$#'

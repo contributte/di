@@ -68,7 +68,7 @@ class InjectValueExtension extends CompilerExtension
 
 			// Try to match property by regex
 			// https://regex101.com/r/D6gc21/1
-			$match = Strings::match($rp->getDocComment(), '#@value\((.+)\)#U');
+			$match = Strings::match((string) $rp->getDocComment(), '#@value\((.+)\)#U');
 
 			// If there's no @value annotation or it's not in propel format,
 			// then skip it

@@ -21,7 +21,7 @@ use stdClass;
 class ResourceExtension extends CompilerExtension
 {
 
-	/** @var array<int, array{namespace: string, resource: stdClass, classes: string[]}>  */
+	/** @var array<int, array{namespace: string, resource: stdClass, classes: string[]}> */
 	private $map = [];
 
 	public function getConfigSchema(): Schema
@@ -58,7 +58,7 @@ class ResourceExtension extends CompilerExtension
 			$this->map[] = [
 				'namespace' => $namespace,
 				'resource' => $resource,
-				'classes' => $classes
+				'classes' => $classes,
 			];
 		}
 	}
@@ -108,7 +108,7 @@ class ResourceExtension extends CompilerExtension
 				}
 
 				if ($decorator->inject !== null) {
-					$def->addTag(InjectExtension::TAG_INJECT, $decorator->inject);
+					$def->addTag(InjectExtension::TagInject, $decorator->inject);
 				}
 			}
 		}
