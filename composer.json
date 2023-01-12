@@ -17,21 +17,20 @@
   ],
   "require": {
     "php": ">=7.2",
-    "nette/di": "~3.0.13",
-    "nette/utils": "^3.0.3"
+    "nette/di": "^3.1.0",
+    "nette/utils": "^3.2.8"
   },
   "require-dev": {
     "ninjify/qa": "^0.13",
     "ninjify/nunjuck": "^0.4",
-    "nette/robot-loader": "^3.0.4",
-    "nette/bootstrap": "^3.0.0",
-    "phpstan/phpstan": "^1.8.0",
-    "phpstan/phpstan-deprecation-rules": "^1.0.0",
-    "phpstan/phpstan-nette": "^1.0.0",
-    "phpstan/phpstan-strict-rules": "^1.0.0"
+    "nette/robot-loader": "^3.4.2",
+    "nette/bootstrap": "^3.1.4",
+    "phpstan/phpstan": "^1.9.11",
+    "phpstan/phpstan-deprecation-rules": "^1.1.1",
+    "phpstan/phpstan-nette": "^1.2.0",
+    "phpstan/phpstan-strict-rules": "^1.4.5"
   },
   "conflict": {
-    "nette/di": "<3.0.0",
     "nette/schema": "<1.1.0"
   },
   "autoload": {
