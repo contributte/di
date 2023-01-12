@@ -33,7 +33,7 @@ test(static function (): void {
 		autoload:
 			resources:
 				Tests\Fixtures\Foo\:
-					paths: [%appDir%/fixtures/Foo]
+					paths: [%appDir%/Fixtures/Foo]
 		', 'neon'));
 	}, 1);
 
@@ -54,7 +54,7 @@ test(static function (): void {
 		autoload:
 			resources:
 				Tests\Fixtures\Bar\:
-					paths: [%appDir%/fixtures/Bar]
+					paths: [%appDir%/Fixtures/Bar]
 		', 'neon'));
 	}, 2);
 
@@ -74,10 +74,10 @@ test(static function (): void {
 		autoload:
 			resources:
 				Tests\Fixtures\Foo\:
-					paths: [%appDir%/fixtures/Foo]
+					paths: [%appDir%/Fixtures/Foo]
 
 				Tests\Fixtures\Bar\:
-					paths: [%appDir%/fixtures/Bar]
+					paths: [%appDir%/Fixtures/Bar]
 		', 'neon'));
 	}, 3);
 
@@ -99,7 +99,7 @@ test(static function (): void {
 		autoload:
 			resources:
 				Tests\Fixtures\Baz\:
-					paths: [%appDir%/fixtures/Baz]
+					paths: [%appDir%/Fixtures/Baz]
 					excludes: [Tests\Fixtures\Baz\Nested\]
 		', 'neon'));
 	}, 4);
@@ -140,7 +140,7 @@ test(static function (): void {
 		autoload:
 			resources:
 				Tests\Fixtures\Baz\:
-					paths: [%appDir%/fixtures/Baz]
+					paths: [%appDir%/Fixtures/Baz]
 					excludes: [Tests\Fixtures\Baz\]
 		', 'neon'));
 	}, 6);
@@ -166,7 +166,7 @@ test(static function (): void {
 		autoload:
 			resources:
 				Tests\Fixtures\Bar\:
-					paths: [%appDir%/fixtures/Bar]
+					paths: [%appDir%/Fixtures/Bar]
 					decorator:
 						tags: [bazbaz]
 		', 'neon'));
@@ -191,7 +191,7 @@ test(static function (): void {
 		autoload:
 			resources:
 				Tests\Fixtures\Bar\:
-					paths: [%appDir%/fixtures/Bar]
+					paths: [%appDir%/Fixtures/Bar]
 					decorator:
 						setup:
 							- setLogger
@@ -214,7 +214,7 @@ test(static function (): void {
 		autoload:
 			resources:
 				Tests\Fixtures\Bar\:
-					paths: [%appDir%/fixtures/Bar]
+					paths: [%appDir%/Fixtures/Bar]
 					decorator:
 						autowired: false
 		', 'neon'));
@@ -238,7 +238,7 @@ test(static function (): void {
 		autoload:
 			resources:
 				Tests\Fixtures\Scalar\:
-					paths: [%appDir%/fixtures/Scalar]
+					paths: [%appDir%/Fixtures/Scalar]
 		', 'neon'));
 	}, 11);
 
@@ -262,7 +262,7 @@ test(static function (): void {
 		autoload:
 			resources:
 				Tests\Fixtures\Scalar\:
-					paths: [%appDir%/fixtures/Scalar]
+					paths: [%appDir%/Fixtures/Scalar]
 		', 'neon'));
 		}, 12);
 	}, ServiceCreationException::class, "Service 'autoload._Tests_Fixtures_Scalar_.2' (type of Tests\Fixtures\Scalar\ScalarService): Parameter \$text in ScalarService::__construct() has no class type or default value, so its value must be specified.");
@@ -279,7 +279,7 @@ test(static function (): void {
 		autoload:
 			resources:
 				Tests\Fixtures\Decorator\:
-					paths: [%appDir%/fixtures/Decorator]
+					paths: [%appDir%/Fixtures/Decorator]
 					decorator:
 						inject: true
 		', 'neon'));

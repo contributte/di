@@ -5,8 +5,7 @@
 		<properties>
 			<property name="rootNamespaces" type="array">
 				<element key="src" value="Contributte\DI"/>
-				<element key="tests/cases" value="Tests\Cases"/>
-				<element key="tests/fixtures" value="Tests\Fixtures"/>
+				<element key="tests" value="Tests"/>
 			</property>
 		</properties>
 	</rule>
