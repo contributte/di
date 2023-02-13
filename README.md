@@ -23,7 +23,7 @@ Website ðŸš€ <a href="https://contributte.org">contributte.org</a> | Contact ðŸ‘
 To install latest version of `contributte/di` use [Composer](https://getcomposer.org).
 
 ```bash
-composer install contributte/di
+composer require contributte/di
 ```
 
 ## Documentation
