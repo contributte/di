@@ -17,3 +17,4 @@ parameters:
 		- src
 
 	ignoreErrors:
+		- '/Call to deprecated method startsWith\(\) of class Nette\\Utils\\Strings:\nuse str_starts_with\(\)/' # TODO: remove after dropping PHP 7 support
