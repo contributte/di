@@ -265,7 +265,7 @@ test(static function (): void {
 					paths: [%appDir%/Fixtures/Scalar]
 		', 'neon'));
 		}, 12);
-	}, ServiceCreationException::class, "Service 'autoload._Tests_Fixtures_Scalar_.2' (type of Tests\Fixtures\Scalar\ScalarService): Parameter \$text in ScalarService::__construct() has no class type or default value, so its value must be specified.");
+	}, ServiceCreationException::class, '~Service \'autoload\._Tests_Fixtures_Scalar_\.\d+\' \(type of Tests\\\\Fixtures\\\\Scalar\\\\ScalarService\): Parameter \$text in ScalarService::__construct\(\) has no class type or default value, so its value must be specified\.~');
 });
 
 // Register services manually (exception)
