@@ -69,6 +69,7 @@ class ResourceExtension extends CompilerExtension
 
 		foreach ($this->map as $config) {
 			$classes = $config['classes'];
+			sort($classes);
 			$resource = $config['resource'];
 			$namespace = $config['namespace'];
 
@@ -78,7 +79,7 @@ class ResourceExtension extends CompilerExtension
 			foreach ($classes as $class) {
 				// Check already registered classes
 				if ($builder->getByType($class) !== null) {
-					return;
+					continue;
 				}
 
 				$def = $builder->addDefinition($this->prefix($name . '.' . $counter++))

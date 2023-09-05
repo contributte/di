@@ -19,7 +19,9 @@ use Tests\Fixtures\Baz\Nested\NestedBazService;
 use Tests\Fixtures\Decorator\InjectService;
 use Tests\Fixtures\Foo\FooBarService;
 use Tests\Fixtures\Foo\FooService;
+use Tests\Fixtures\Scalar\Scalar2Service;
 use Tests\Fixtures\Scalar\ScalarService;
+use Tests\Fixtures\Scalar\ZScalarService;
 
 require_once __DIR__ . '/../../bootstrap.php';
 
@@ -245,9 +247,12 @@ test(static function (): void {
 	/** @var Container $container */
 	$container = new $class();
 
+	Assert::type(ScalarService::class, $container->getByType(ScalarService::class));
+	Assert::type(Scalar2Service::class, $container->getByType(Scalar2Service::class));
+	Assert::type(ZScalarService::class, $container->getByType(ZScalarService::class));
+
 	/** @var ScalarService $service */
 	$service = $container->getService('scalar');
-
 	Assert::equal('foobar', $service->text);
 });
 
@@ -268,7 +273,7 @@ test(static function (): void {
 	}, ServiceCreationException::class, '~Service \'autoload\._Tests_Fixtures_Scalar_\.\d+\' \(type of Tests\\\\Fixtures\\\\Scalar\\\\ScalarService\): Parameter \$text in ScalarService::__construct\(\) has no class type or default value, so its value must be specified\.~');
 });
 
-// Register services manually (exception)
+// Register services manually
 test(static function (): void {
 	$loader = new ContainerLoader(TEMP_DIR, true);
 	$class = $loader->load(static function (Compiler $compiler): void {
