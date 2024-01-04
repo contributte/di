@@ -7,8 +7,7 @@ use Nette\DI\Container;
 trait TContainerAware
 {
 
-	/** @var Container */
-	protected $container;
+	protected Container $container;
 
 	public function setContainer(Container $container): void
 	{

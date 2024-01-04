@@ -10,14 +10,7 @@ abstract class PassCompilerExtension extends CompilerExtension
 {
 
 	/** @var AbstractPass[] */
-	protected $passes = [];
-
-	protected function addPass(AbstractPass $pass): self
-	{
-		$this->passes[] = $pass;
-
-		return $this;
-	}
+	protected array $passes = [];
 
 	/**
 	 * Register services
@@ -47,6 +40,13 @@ abstract class PassCompilerExtension extends CompilerExtension
 		foreach ($this->passes as $pass) {
 			$pass->afterPassCompile($class);
 		}
+	}
+
+	protected function addPass(AbstractPass $pass): self
+	{
+		$this->passes[] = $pass;
+
+		return $this;
 	}
 
 }

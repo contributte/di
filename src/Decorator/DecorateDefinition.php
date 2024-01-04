@@ -12,7 +12,7 @@ final class DecorateDefinition
 {
 
 	/** @var ServiceDefinition[] */
-	private $definitions;
+	private array $definitions;
 
 	/**
 	 * @param ServiceDefinition[] $definitions
@@ -26,7 +26,7 @@ final class DecorateDefinition
 	 * @param string|mixed[]|Definition|Reference|Statement $entity
 	 * @param mixed[] $args
 	 */
-	public function addSetup($entity, array $args = []): self
+	public function addSetup(string|array|Definition|Reference|Statement $entity, array $args = []): self
 	{
 		foreach ($this->definitions as $definition) {
 			$definition->addSetup($entity, $args);

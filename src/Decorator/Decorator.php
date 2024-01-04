@@ -10,11 +10,9 @@ use Nette\DI\Definitions\ServiceDefinition;
 final class Decorator
 {
 
-	/** @var ContainerBuilder */
-	private $builder;
+	private ContainerBuilder $builder;
 
-	/** @var ExtensionDefinitionsHelper */
-	private $definitionsHelper;
+	private ExtensionDefinitionsHelper $definitionsHelper;
 
 	private function __construct(ContainerBuilder $builder, ExtensionDefinitionsHelper $definitionsHelper)
 	{
@@ -42,9 +40,8 @@ final class Decorator
 	private function findByType(string $type): array
 	{
 		$definitions = $this->definitionsHelper->getServiceDefinitionsFromDefinitions($this->builder->getDefinitions());
-		return array_filter($definitions, static function (ServiceDefinition $def) use ($type): bool {
-			return $def->getType() !== null && is_a($def->getType(), $type, true);
-		});
+
+		return array_filter($definitions, static fn (ServiceDefinition $def): bool => $def->getType() !== null && is_a($def->getType(), $type, true));
 	}
 
 }

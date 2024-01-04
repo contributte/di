@@ -12,13 +12,13 @@ final class MutableExtension extends CompilerExtension
 	use SmartObject;
 
 	/** @var callable[] function (MutableExtension $extension, \Nette\DI\ContainerBuilder $builder, array $config); */
-	public $onLoad = [];
+	public array $onLoad = [];
 
 	/** @var callable[] function (MutableExtension $extension, \Nette\DI\ContainerBuilder $builder, array $config); */
-	public $onBefore = [];
+	public array $onBefore = [];
 
 	/** @var callable[] function (MutableExtension $extension, ClassType $class, array $config); */
-	public $onAfter = [];
+	public array $onAfter = [];
 
 	/**
 	 * Register services

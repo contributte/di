@@ -77,17 +77,14 @@ class InjectValueExtension extends CompilerExtension
 			}
 
 			// Hooray, we have a match!
-			[,$content] = $match;
+			[, $content] = $match;
 
 			// Expand content of @value and setup to definition
 			$def->addSetup('$' . $name, [$this->expand($content)]);
 		}
 	}
 
-	/**
-	 * @return mixed
-	 */
-	protected function expand(string $value)
+	protected function expand(string $value): mixed
 	{
 		return Helpers::expand($value, $this->getContainerBuilder()->parameters);
 	}

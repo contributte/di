@@ -10,7 +10,6 @@ use Nette\Loaders\RobotLoader;
 use Nette\Schema\Expect;
 use Nette\Schema\Schema;
 use Nette\Utils\Arrays;
-use Nette\Utils\Strings;
 use ReflectionClass;
 use RuntimeException;
 use stdClass;
@@ -22,7 +21,7 @@ class ResourceExtension extends CompilerExtension
 {
 
 	/** @var array<int, array{namespace: string, resource: stdClass, classes: string[]}> */
-	private $map = [];
+	private array $map = [];
 
 	public function getConfigSchema(): Schema
 	{
@@ -132,14 +131,12 @@ class ResourceExtension extends CompilerExtension
 		$classes = [];
 		foreach ($indexed as $class => $file) {
 			// Different namespace
-			if (!Strings::startsWith($class, $namespace)) {
+			if (!str_starts_with($class, $namespace)) {
 				continue;
 			}
 
 			// Excluded namespace
-			if (array_filter($excludes, static function (string $exclude) use ($class): bool {
-					return Strings::startsWith($class, $exclude);
-				}) !== []) {
+			if (array_filter($excludes, static fn (string $exclude): bool => str_starts_with($class, $exclude)) !== []) {
 				continue;
 			}
 

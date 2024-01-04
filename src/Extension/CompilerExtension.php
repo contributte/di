@@ -8,8 +8,7 @@ use Nette\DI\CompilerExtension as NCompilerExtension;
 abstract class CompilerExtension extends NCompilerExtension
 {
 
-	/** @var ExtensionDefinitionsHelper|null */
-	private $helper;
+	private ?ExtensionDefinitionsHelper $helper = null;
 
 	protected function getHelper(): ExtensionDefinitionsHelper
 	{

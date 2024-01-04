@@ -8,8 +8,7 @@ use Nette\PhpGenerator\ClassType;
 abstract class AbstractPass
 {
 
-	/** @var CompilerExtension */
-	protected $extension;
+	protected CompilerExtension $extension;
 
 	public function __construct(CompilerExtension $extension)
 	{
@@ -21,6 +20,7 @@ abstract class AbstractPass
 	 */
 	public function loadPassConfiguration(): void
 	{
+		// No-op
 	}
 
 	/**
@@ -28,10 +28,12 @@ abstract class AbstractPass
 	 */
 	public function beforePassCompile(): void
 	{
+		// No-op
 	}
 
 	public function afterPassCompile(ClassType $class): void
 	{
+		// No-op
 	}
 
 }

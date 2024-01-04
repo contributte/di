@@ -9,13 +9,11 @@ use Nette\DI\Definitions\LocatorDefinition;
 use Nette\DI\Definitions\ServiceDefinition;
 use Nette\DI\Definitions\Statement;
 use Nette\DI\Resolver;
-use Nette\Utils\Strings;
 
 class ExtensionDefinitionsHelper
 {
 
-	/** @var Compiler */
-	private $compiler;
+	private Compiler $compiler;
 
 	public function __construct(Compiler $compiler)
 	{
@@ -64,14 +62,13 @@ class ExtensionDefinitionsHelper
 
 	/**
 	 * @param string|mixed[]|Statement $config
-	 * @return Definition|string
 	 */
-	public function getDefinitionFromConfig($config, string $preferredPrefix)
+	public function getDefinitionFromConfig(string|array|Statement $config, string $preferredPrefix): Definition|string
 	{
 		$builder = $this->compiler->getContainerBuilder();
 
 		// Definition is defined in ServicesExtension, try to get it
-		if (is_string($config) && Strings::startsWith($config, '@')) {
+		if (is_string($config) && str_starts_with($config, '@')) {
 			$definitionName = substr($config, 1);
 
 			// Definition is already loaded (beforeCompile phase), return it
@@ -85,6 +82,7 @@ class ExtensionDefinitionsHelper
 
 		// Raw configuration given, create definition from it
 		$this->compiler->loadDefinitionsFromConfig([$preferredPrefix => $config]);
+
 		return $builder->getDefinition($preferredPrefix);
 	}
 
@@ -92,16 +90,15 @@ class ExtensionDefinitionsHelper
 	 * Check if config is valid callable or callable syntax which may result in valid callable at runtime and returns an definition otherwise
 	 *
 	 * @param string|mixed[]|Statement $config
-	 * @return mixed
 	 */
-	public function getCallableFromConfig($config, string $preferredPrefix)
+	public function getCallableFromConfig(string|array|Statement $config, string $preferredPrefix): mixed
 	{
 		if (is_callable($config)) {
 			return $config;
 		}
 
 		// Might be valid callable at runtime
-		if (is_array($config) && is_callable($config, true) && Strings::startsWith($config[0], '@')) {
+		if (is_array($config) && is_callable($config, true) && str_starts_with($config[0], '@')) {
 			return $config;
 		}
 
