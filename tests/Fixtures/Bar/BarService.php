@@ -7,8 +7,7 @@ use stdClass;
 final class BarService
 {
 
-	/** @var stdClass */
-	private $logger;
+	private stdClass $logger;
 
 	public function setLogger(stdClass $logger): void
 	{

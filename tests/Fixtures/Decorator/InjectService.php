@@ -5,8 +5,7 @@ namespace Tests\Fixtures\Decorator;
 class InjectService
 {
 
-	/** @var Authenticator */
-	public $authenticator;
+	public Authenticator $authenticator;
 
 	public function injectAuthenticator(Authenticator $authenticator): void
 	{

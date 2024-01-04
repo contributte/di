@@ -6,7 +6,7 @@ abstract class Base
 {
 
 	/** @var mixed[] */
-	public $setup = [];
+	public array $setup = [];
 
 	public function setup(Tester $tester, string $bar): void
 	{

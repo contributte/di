@@ -1,11 +1,9 @@
 <?php declare(strict_types = 1);
 
-/**
- * Test: Decorator/Decorator
- */
-
 use Contributte\DI\Decorator\Decorator;
 use Contributte\DI\Helper\ExtensionDefinitionsHelper;
+use Contributte\Tester\Environment;
+use Contributte\Tester\Toolkit;
 use Nette\DI\Compiler;
 use Nette\DI\CompilerExtension;
 use Nette\DI\Container;
@@ -17,8 +15,8 @@ use Tests\Fixtures\Inject\Tester;
 
 require_once __DIR__ . '/../../bootstrap.php';
 
-test(static function (): void {
-	$loader = new ContainerLoader(TEMP_DIR, true);
+Toolkit::test(static function (): void {
+	$loader = new ContainerLoader(Environment::getTestDir(), true);
 	$class = $loader->load(static function (Compiler $compiler): void {
 		$extension = new class extends CompilerExtension
 		{
