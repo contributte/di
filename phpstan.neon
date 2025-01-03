@@ -13,6 +13,7 @@ parameters:
 
 	paths:
 		- src
+		- tests
 		- .docs
 
 	ignoreErrors:

@@ -98,7 +98,7 @@ class ExtensionDefinitionsHelper
 		}
 
 		// Might be valid callable at runtime
-		if (is_array($config) && is_callable($config, true) && str_starts_with($config[0], '@')) {
+		if (is_array($config) && is_callable($config, true) && is_string($config[0]) && str_starts_with($config[0], '@')) {
 			return $config;
 		}
 
