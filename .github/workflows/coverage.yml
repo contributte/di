@@ -8,7 +8,7 @@ on:
     branches: ["*"]
 
   schedule:
-    - cron: "0 8 * * 1"
+    - cron: "0 11 * * 1"
 
 jobs:
   coverage:
@@ -16,3 +16,4 @@ jobs:
     uses: contributte/.github/.github/workflows/nette-tester-coverage-v2.yml@master
     with:
       php: "8.4"
+    secrets: inherit
