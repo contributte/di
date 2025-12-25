@@ -59,7 +59,7 @@ class InjectValueExtension extends CompilerExtension
 		$class = $def->getType();
 
 		// Class is not defined, skip it
-		if ($class === null) {
+		if ($class === null || !class_exists($class)) {
 			return;
 		}
 

@@ -16,4 +16,8 @@ parameters:
 		- tests
 		- .docs
 
+	excludePaths:
+		analyseAndScan:
+			- tests/tmp (?)
+
 	ignoreErrors:
