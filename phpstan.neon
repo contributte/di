@@ -3,7 +3,7 @@ includes:
 
 parameters:
 	level: 9
-	phpVersion: 80100
+	phpVersion: 80200
 
 	scanDirectories:
 		- src
@@ -13,7 +13,7 @@ parameters:
 
 	paths:
 		- src
-		- tests
 		- .docs
 
 	ignoreErrors:
+		- '#Trait Contributte\\DI\\TContainerAware is used zero times and is not analysed#'

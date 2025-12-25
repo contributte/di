@@ -16,16 +16,16 @@
     }
   ],
   "require": {
-    "php": ">=8.1",
+    "php": ">=8.2",
     "nette/di": "^3.1.0",
     "nette/utils": "^3.2.8 || ^4.0"
   },
   "require-dev": {
+    "contributte/phpstan": "^0.2",
     "contributte/qa": "^0.4",
     "contributte/tester": "^0.3",
-    "contributte/phpstan": "^0.2",
-    "nette/robot-loader": "^3.4.2 || ^4.0",
-    "nette/bootstrap": "^3.1.4"
+    "nette/bootstrap": "^3.1.4",
+    "nette/robot-loader": "^3.4.2 || ^4.0"
   },
   "conflict": {
     "nette/schema": "<1.1.0"
