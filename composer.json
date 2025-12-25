@@ -25,8 +25,7 @@
     "contributte/qa": "^0.4",
     "contributte/tester": "^0.3",
     "nette/bootstrap": "^3.1.4",
-    "nette/robot-loader": "^3.4.2 || ^4.0",
-    "nette/tester": "^2.5"
+    "nette/robot-loader": "^3.4.2 || ^4.0"
   },
   "conflict": {
     "nette/schema": "<1.1.0"
