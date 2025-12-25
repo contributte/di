@@ -2,6 +2,8 @@
 
 use Contributte\DI\Decorator\Decorator;
 use Contributte\DI\Helper\ExtensionDefinitionsHelper;
+use Contributte\Tester\Environment;
+use Contributte\Tester\Toolkit;
 use Nette\DI\Compiler;
 use Nette\DI\CompilerExtension;
 use Nette\DI\Container;
@@ -13,39 +15,41 @@ use Tests\Fixtures\Inject\Tester;
 
 require_once __DIR__ . '/../../bootstrap.php';
 
-$loader = new ContainerLoader(TEMP_DIR, true);
-$class = $loader->load(static function (Compiler $compiler): void {
-	$extension = new class extends CompilerExtension
-	{
-
-		public function loadConfiguration(): void
+Toolkit::test(static function (): void {
+	$loader = new ContainerLoader(Environment::getTestDir(), true);
+	$class = $loader->load(static function (Compiler $compiler): void {
+		$extension = new class extends CompilerExtension
 		{
-			$builder = $this->getContainerBuilder();
 
-			$builder->addDefinition($this->prefix('child'))
-				->setType(Child::class);
+			public function loadConfiguration(): void
+			{
+				$builder = $this->getContainerBuilder();
 
-			$builder->addDefinition($this->prefix('inject'))
-				->setType(Tester::class);
-		}
+				$builder->addDefinition($this->prefix('child'))
+					->setType(Child::class);
 
-		public function beforeCompile(): void
-		{
-			$builder = $this->getContainerBuilder();
+				$builder->addDefinition($this->prefix('inject'))
+					->setType(Tester::class);
+			}
 
-			$decorator = Decorator::of($builder, new ExtensionDefinitionsHelper($this->compiler));
-			$decorator->decorate(Base::class)
-				->addSetup('setup', [
-					'bar' => 'foo',
-				])
-				->addTags(['tag']);
-		}
+			public function beforeCompile(): void
+			{
+				$builder = $this->getContainerBuilder();
 
-	};
-	$compiler->addExtension('x', $extension);
-}, 1);
-/** @var Container $container */
-$container = new $class();
-Assert::notEqual(new Child(), $container->getService('x.child'));
-Assert::equal([new Tester(), 'foo'], $container->getService('x.child')->setup);
-Assert::equal(['x.child' => true], $container->findByTag('tag'));
+				$decorator = Decorator::of($builder, new ExtensionDefinitionsHelper($this->compiler));
+				$decorator->decorate(Base::class)
+					->addSetup('setup', [
+						'bar' => 'foo',
+					])
+					->addTags(['tag']);
+			}
+
+		};
+		$compiler->addExtension('x', $extension);
+	}, 1);
+	/** @var Container $container */
+	$container = new $class();
+	Assert::notEqual(new Child(), $container->getService('x.child'));
+	Assert::equal([new Tester(), 'foo'], $container->getService('x.child')->setup);
+	Assert::equal(['x.child' => true], $container->findByTag('tag'));
+});
