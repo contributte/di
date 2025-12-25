@@ -13,11 +13,7 @@ parameters:
 
 	paths:
 		- src
-		- tests
 		- .docs
 
-	excludePaths:
-		analyseAndScan:
-			- tests/tmp (?)
-
 	ignoreErrors:
+		- '#Trait Contributte\\DI\\TContainerAware is used zero times and is not analysed#'
