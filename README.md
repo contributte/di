@@ -167,14 +167,12 @@ $class = $loader->load(static function (Compiler $compiler): void {
 	$mutable->onBefore[] = static function (CompilerExtension $ext, ContainerBuilder $builder): void {
 		$definitions = $builder->findByType(Xyz::class);
 	};
-
-	', 'neon'));
 }, time());
 ```
 
 ## InjectValueExtension
 
-This **awesome** extension allows you to inject values directly into public properties.
+This extension allows you to inject values directly into public properties.
 
 Let's say we have a service like this:
 
@@ -211,7 +209,7 @@ decorator:
 		tags: [inject.value]
 ```
 
-In the end, after creating the `FooPresenter`, the `$bar` property will be filled with `<path>/www/baz`. Cool right?
+After creating the `FooPresenter`, the `$bar` property will be filled with `<path>/www/baz`.
 
 ## PassCompilerExtension
 
