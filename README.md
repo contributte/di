@@ -45,9 +45,7 @@ autoload:
 			paths: [%appDir%/model/services]
 ```
 
-## Documentation
-
-For details on how to use this package, check out the [documentation](.docs).
+The [documentation](.docs) covers the resource options and the other extensions.
 
 ## Versions
 
@@ -58,9 +56,19 @@ For details on how to use this package, check out the [documentation](.docs).
 
 ## Development
 
+Install the dependencies and run the checks:
+
+```bash
+make install   # install dependencies
+make qa        # check code style and run static analysis
+make tests     # run tests
+```
+
+Run `make` to list every target.
+
 See [how to contribute](https://contributte.org/contributing.html) to this package.
 
-This package is currently maintained by these authors.
+This package is maintained by these authors.
 
 <a href="https://github.com/f3l1x">
   <img width="80" height="80" src="https://avatars2.githubusercontent.com/u/538058?v=3&s=80">
