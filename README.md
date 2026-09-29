@@ -2,7 +2,7 @@
 
 <p align=center>
   <a href="https://github.com/contributte/di/actions"><img src="https://badgen.net/github/checks/contributte/di/master?cache=300"></a>
-  <a href="https://coveralls.io/r/contributte/di"><img src="https://badgen.net/coveralls/c/github/contributte/di?cache=300"></a>
+  <a href="https://codecov.io/gh/contributte/di"><img src="https://badgen.net/codecov/c/github/contributte/di"></a>
   <a href="https://packagist.org/packages/contributte/di"><img src="https://badgen.net/packagist/dm/contributte/di"></a>
   <a href="https://packagist.org/packages/contributte/di"><img src="https://badgen.net/packagist/v/contributte/di"></a>
 </p>
@@ -18,17 +18,34 @@
 Website 🚀 <a href="https://contributte.org">contributte.org</a> | Contact 👨🏻‍💻 <a href="https://f3l1x.io">f3l1x.io</a> | Twitter 🐦 <a href="https://twitter.com/contributte">@contributte</a>
 </p>
 
+Contributte DI is a set of DI extensions and helpers for Nette Framework that `nette/di` doesn't ship. It
+registers every class of a namespace as a service, injects the container into `IContainerAware` services, splits
+big extensions into compiler passes and decorates services from code.
+
 ## Usage
 
-To install latest version of `contributte/di` use [Composer](https://getcomposer.org).
+To install the latest version of `contributte/di`, use [Composer](https://getcomposer.org):
 
 ```bash
 composer require contributte/di
 ```
 
-## Documentation
+Requires PHP 8.2 or later and Nette 3.2 or later. `ResourceExtension` also needs `nette/robot-loader`.
 
-For details on how to use this package, check out our [documentation](.docs).
+Register `ResourceExtension` in your `config.neon` and point it to a namespace. Every non-abstract class found in
+the folder becomes a service, unless the container already has a service of that type:
+
+```neon
+extensions:
+	autoload: Contributte\DI\Extension\ResourceExtension
+
+autoload:
+	resources:
+		App\Model\Services\:
+			paths: [%appDir%/model/services]
+```
+
+The [documentation](.docs) covers the resource options and the other extensions.
 
 ## Versions
 
@@ -39,13 +56,25 @@ For details on how to use this package, check out our [documentation](.docs).
 
 ## Development
 
-See [how to contribute](https://contributte.org) to this package. This package is currently maintained by these authors.
+Install the dependencies and run the checks:
+
+```bash
+make install   # install dependencies
+make qa        # check code style and run static analysis
+make tests     # run tests
+```
+
+Run `make` to list every target.
+
+See [how to contribute](https://contributte.org/contributing.html) to this package.
+
+This package is maintained by these authors.
 
 <a href="https://github.com/f3l1x">
-    <img width="80" height="80" src="https://avatars2.githubusercontent.com/u/538058?v=3&s=80">
+  <img width="80" height="80" src="https://avatars2.githubusercontent.com/u/538058?v=3&s=80">
 </a>
 
 -----
 
-Consider to [support](https://contributte.org/partners) **contributte** development team.
-Also thank you for using this package.
+Consider [supporting](https://contributte.org/partners.html) the **contributte** development team.
+Thank you for using this package.
